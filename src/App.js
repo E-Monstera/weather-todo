@@ -1,8 +1,18 @@
+import axios from 'axios';
+import {useEffect, useState} from 'react';
+import Home from './components/Home';
+
+
+
+
 
 function App() {
+
+
+
   return (
     <div className="App">
-      <h1>Just the start</h1>
+      <Home />
     </div>
   );
 }
