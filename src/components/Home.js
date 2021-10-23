@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { getWeather, getLocation } from '../services/user.service';
-import { formatState } from '../services/formatting';
 
 const Home = () => {
 
