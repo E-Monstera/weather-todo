@@ -1,0 +1,78 @@
+.planner-wrapper {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.planner {
+    width: 70%;
+    height: 500px;
+
+    h1 {
+        text-align: center;
+        font-size: 2rem;
+        text-decoration: underline;
+    }
+}
+
+.planner-sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    button {
+        width: 200px;
+        border: none;
+        border-bottom: solid 1px rgb(71, 136, 125);
+        background-color: rgb(217, 227, 228);
+        font-size: 1.4rem;
+        padding: 10px;
+    }
+
+    h2 {
+        font-size: 1.6rem;
+        margin: 10px 0;
+        text-decoration: underline;
+    }
+}
+
+
+.planner-container {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+}
+
+.item-checkbox label {
+    position:absolute;
+    left:-10000px;
+    top:auto;
+    width:1px;
+    height:1px;
+    overflow:hidden;
+}
+
+
+.item {
+    display: flex;
+    align-items: center;
+}
+
+.item-container {
+    width: 100%;
+    background-color: rgb(217, 227, 228);
+    justify-content: space-between;
+    padding: 0 20px;
+    height: 50px;
+    margin: 10px 0;
+}
+
+.item-details {
+    height: 100%;
+    width: 50%;
+    justify-content: space-evenly;
+}
+

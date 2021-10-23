@@ -4,7 +4,7 @@ import { UserContext } from './App';
 
 import LoginPage from './components/LoginPage';
 import Home from './components/Home';
-import ToDo from './components/ToDo';
+import Planner from './components/Planner';
 
 const Routes = () => {
     // Grab UserContext from app.js and destructure currentUser from it
@@ -14,7 +14,7 @@ const Routes = () => {
     return (
         <Switch>
             <Route path='/' exact component={currentUser.username === ''? LoginPage:Home} />
-            <Route path='/schedule' component={ToDo} />
+            <Route path='/schedule' component={Planner} />
         </Switch>
     )
 }
