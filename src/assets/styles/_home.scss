@@ -1,0 +1,41 @@
+.home {
+    display: grid;
+    grid-template-columns: 3fr minmax(300px, 500px);
+    margin: 0 50px;
+    min-height: 80vh;
+}
+
+.home-weather-wrapper {
+    // border: solid;
+}
+
+
+
+.home-planner-wrapper {
+    // border: solid;
+    height: 100%;
+
+    h2 {
+        font-size: 2rem;
+        text-align: center;
+    }
+
+    .home-planner-container {
+        height: calc(100% - 2rem);
+    }
+
+    .planner-holder {
+        background-color: rgba(360, 360, 360, .8);
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        padding-top: 20px;
+
+        a {
+            align-self: center;
+            width: fit-content;
+            color: black;
+        }
+        
+    }
+}

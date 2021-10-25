@@ -9,6 +9,7 @@
 .planner {
     width: 70%;
     height: 500px;
+    border: solid;
 
     h1 {
         text-align: center;
@@ -76,3 +77,11 @@
     justify-content: space-evenly;
 }
 
+.item-button {
+    background-color: rgba(0,0,0,0);
+    border: none;
+}
+
+.item-button:hover {
+    transform: scale(1.2);
+}

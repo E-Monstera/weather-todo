@@ -14,7 +14,7 @@ const Routes = () => {
     return (
         <Switch>
             <Route path='/' exact component={currentUser.username === ''? LoginPage:Home} />
-            <Route path='/schedule' component={Planner} />
+            <Route path='/planner' component={Planner} />
         </Switch>
     )
 }

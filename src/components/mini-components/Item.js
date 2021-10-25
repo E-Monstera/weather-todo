@@ -13,10 +13,10 @@ const Item = (props) => {
                 <p>{item.title}</p>
             </div>
             <div className='item item-details'>
-                <button>Details</button>
+                <button className='item-button delete-button'><i className="fas fa-info-circle"></i></button>
                 <p>{item.due_date.slice(0, 10)}</p>
-                <button>Edit</button>
-                <button>Delete</button>
+                <button alt='edit item' className='item-button edit-button'><i className="far fa-edit" alt='edit item'></i></button>
+                <button alt='delete item' className='item-button delete-button'><i className="far fa-trash-alt" alt='delete item'></i></button>
             </div>
         </div>
     )

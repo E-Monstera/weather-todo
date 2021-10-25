@@ -3,14 +3,16 @@ import Routes from './Routes';
 import { BrowserRouter as Router } from 'react-router-dom'
 import React, { useReducer, useEffect } from 'react';
 import {logout, authenticateUser} from './services/auth.service'
-
+import Nav from './components/Nav'
 
 export const UserContext = React.createContext();
 const initialState = {
   id: '',
   username: '',
   location: '',
-  email: ''
+  email: '',
+  primary_weather: {},
+  planner: []
 }
 
 // Reducer method to either set the user in state or logout the user
@@ -25,7 +27,9 @@ const reducer = (state, action) => {
         id: action.payload.user.id,
         location: location,
         username: action.payload.user.username,
-        email: action.payload.user.email
+        email: action.payload.user.email,
+        primary_weather: {},
+        planner: []
       }
 
     case 'updateUser':
@@ -67,7 +71,8 @@ function App() {
       value={{ currentUser, userDispatch: dispatch }}
     >
       <Router>
-        <div className='app'>
+        <div className='app rainy-day'>
+          <Nav />
             <Routes />
         </div>
       </Router>
