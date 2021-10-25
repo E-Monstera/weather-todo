@@ -1,46 +1,31 @@
 import { useState, useEffect } from 'react';
 import { getToDo } from '../services/user.service';
-import Item from './mini-components/Item';
+import Schedule from './mini-components/Schedule'
+import Calendar from './mini-components/Calendar'
+import Notes from './mini-components/Notes'
 
-const ToDo = () => {
-    const [items, setItems] = useState([]);
-    const [projects, setProjects] = useState([]);
+const Planner = () => {
+    const [active, setActive] = useState('schedule');
 
-    useEffect(() => {
-        getToDo()
-            .then(response => {
-                console.log('success')
-                console.log(response.data)
-                setItems(response.data.items)
-                setProjects(response.data.projects)
-            })
-            .catch(err => {
-                console.log('error')
-                console.log(err.response)
-            })
-    }, [])
-    /*
-    In this component, we will grab the users items and projects, then display them to the page
-    */
+    const handleActive = (e) => {
+        setActive(e.target.id)
+    }
+
+
     return (
         <div className='planner-wrapper'>
             <div className='planner'>
-                <h1>Planner</h1>
+                <div className='planner-buttons'>
+                    <button id='schedule' onClick={handleActive}>Planner</button>
+                    <button id='calendar' onClick={handleActive}>Calendar</button>
+                    <button id='notes' onClick={handleActive}>Notes</button>
+                </div>
                 <div className='planner-container'>
-                    <div className='planner-sidebar'>
-                        <button>Today</button>
-                        <button>This Week</button>
-                        <button>Urgent</button>
-                        <h2>Projects</h2>
-                        {projects.map(project => <button key={project.project._id}>{project.project.title}</button>)}
-                    </div>
-                    <div className='planner-content'>
-                        {items.map(item => <Item item={item} key={item._id} />)}
-                    </div>
+                    {active === 'schedule' ? <Schedule /> : active === 'calendar' ? <Calendar /> : <Notes />}
                 </div>
             </div>
         </div>
     )
 }
 
-export default ToDo
+export default Planner

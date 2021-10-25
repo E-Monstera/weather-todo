@@ -1,37 +1,60 @@
-import { useState, useEffect } from 'react';
-import { getWeather, getLocation } from '../services/user.service';
+import { useState, useEffect, useContext } from 'react';
+import { getWeather, getLocation, updateLocation, getToDo } from '../services/user.service';
 import { Link } from 'react-router-dom';
+import { UserContext } from '../App';
 
 const Home = () => {
 
-    const [location, setLocation] = useState('');       //State to hold the user inputted location
-    const [weather, setWeather] = useState()                  //State to hold the weather data
+    // Grab UserContext from app.js and destructure currentUser from it
+    const userContext = useContext(UserContext);
+    const { currentUser } = userContext;
 
+
+    const [location, setLocation] = useState(currentUser.location);       //State to hold the user inputted location
+    const [loading, setLoading] = useState(true);
+
+    // Function to make user input for a location a controlled input
     const handleChange = (e) => {
         setLocation(e.target.value)
     }
 
+    //Function to handle submitting a new location and grabbing the associated weather
     const handleSubmit = async (e) => {
         e.preventDefault();
-        let data = await grabWeather();
-        console.log('done')
-        console.log(data)
-
+        setLoading(true);
+        await updateLocation(location); //Start updating the location in the db
+        userContext.userDispatch({ type: 'updateUserLocation', payload: { location: location } });    //Update location in App.js - Starts Loading animation
+        grabWeather(location);
     }
 
-    const grabWeather = async () => {
+    // Function to grab weather upon a user entering a new location
+    const grabWeather = async (local) => {
         try {
-            let results = await getWeather(location);  //Send the location to the backend API
-            return results.data;
+            let data = await getWeather(local);  //Send the location to the backend API
+            setLoading(false);
+            userContext.userDispatch({ type: 'updateWeather', payload: { weather: data.data.weather } });    //Update location in App.js - Starts Loading animation
         } catch (err) {
             console.log('error')
             console.log(err)
         }
     }
 
+    //useEffect to disable the loading animation when App.js is done grabbing currentUser weather
+    useEffect(() => {
+        if (currentUser.username === '') {
+            //return, currentUser is still being set
+            return;
+        } else if (Object.keys(currentUser.primary_weather).length !== 0) {
+            console.log('HIT USEEFFECT FOR LOADING')
+            setLoading(false);      //Weather was grabbed in App.js, allow DOM to reflect this
+        } else {
+            return;
+        }
+    }, [currentUser])
 
     return (
         <div className='home'>
+            {console.log(currentUser)}
             <div className='home-weather-wrapper'>
                 <div className='weather-form'>
                     <form onSubmit={handleSubmit}>
@@ -39,16 +62,31 @@ const Home = () => {
                         <input type='text' id='location' name='location' placeholder='Enter City or Zipcode' required initialvalue={location} value={location} onChange={handleChange}></input>
                     </form>
                 </div>
-                <div className='todays-weather'>
 
-                </div>
-                <div className='daily-weather-container'>
+                {currentUser.location === '' ? <h3>No location on file, please search for one above</h3> :
 
-                </div>
+                    loading ? <h3>Loading...</h3> :
+                        <div>
+                            <div className='todays-weather'>
+                                <div className='weather-left'>
+                                    <h3>{currentUser.location}</h3>
+                                    <p>{currentUser.primary_weather.current.temp} °C</p>
+                                </div>
+                                <div className='weather-right'>
+                                    <p>Feels Like: {currentUser.primary_weather.current.feels_like} °C</p>
+                                    <p>Max Temperature: {currentUser.primary_weather.daily[0].temp.max}</p>
+                                    <p>Min Temperature: {currentUser.primary_weather.daily[0].temp.min}</p>
+                                    <p>Humidity: {currentUser.primary_weather.current.humidity}</p>
+                                </div>
+                            </div>
+                            <div className='daily-weather-container'>
 
-                <div className='hourly-weather-container'>
-                    
-                </div>
+                            </div>
+
+                            <div className='hourly-weather-container'>
+
+                            </div>
+                        </div>}
 
             </div>
             <div className='home-planner-wrapper'>
@@ -56,7 +94,10 @@ const Home = () => {
                 <div className='home-planner-container'>
                     <div className='planner-holder'>
                         <Link to='/planner'>To Planner →</Link>
-
+                        <div>
+                            <h3>Due Today</h3>
+                            
+                        </div>
                     </div>
                 </div>
             </div>

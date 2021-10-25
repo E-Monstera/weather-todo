@@ -1,7 +1,7 @@
 .planner-wrapper {
     width: 100vw;
-    height: 100vh;
     display: flex;
+    margin-top: 150px;
     justify-content: center;
     align-items: center;
 }
@@ -9,12 +9,23 @@
 .planner {
     width: 70%;
     height: 500px;
-    border: solid;
+    display: flex;
+    flex-direction: column;
+
 
     h1 {
         text-align: center;
         font-size: 2rem;
         text-decoration: underline;
+    }
+}
+
+.planner-buttons {
+    align-self: center;
+
+    button {
+        height: 40px;
+        width: 200px;
     }
 }
 
@@ -45,6 +56,9 @@
     height: 100%;
     display: grid;
     grid-template-columns: 1fr 4fr;
+
+    border-radius: 10px;
+    background-color: rgba(360, 360, 360, 0.8);
 }
 
 .item-checkbox label {
@@ -84,4 +98,46 @@
 
 .item-button:hover {
     transform: scale(1.2);
+}
+
+.active-tab {
+    color: green;
+}
+
+// Styling for the NewForm component
+.newForm-main {
+    width: 600px;
+    height: 350px;
+
+    .newForm-data {
+        display: grid;
+        grid-template-columns: 1fr 3fr;
+        height: 100%;
+    }
+}
+
+// .newForm-data {
+//     display: flex;;
+// }
+
+.newForm-aside {
+    display: flex;
+    flex-direction: column;
+
+    button {
+        width: 100%;
+        font-size: 1.3rem;
+    }
+}
+
+.newForm-content {
+    form {
+        width: 90%;
+        height: 100%;
+        margin: 0 auto;
+    }
+
+    textarea {
+        // height: 100%;
+    }
 }

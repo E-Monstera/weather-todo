@@ -1,6 +1,7 @@
 import { useState, useContext } from 'react';
 import { login } from '../../services/auth.service'
 import { UserContext } from '../../App';
+import { getWeather, getToDo } from '../../services/user.service';
 
 const Login = (props) => {
 
@@ -29,9 +30,34 @@ const Login = (props) => {
         e.preventDefault();
         let res = await login(user)     //Wait for user to login
         if (res.status === 200) {   //Success! Update userContext and close modal
-            userContext.userDispatch({ type: 'setUser', payload: {user: res.user}})
-        } else if (res.status === 400){    //Error, display message to user
-                setError(res.data.message)
+            userContext.userDispatch({ type: 'setUser', payload: { user: res.user } })
+
+            // Now that the users basic data has been collected, grab their weather data and planner
+            getToDo()
+                .then(res2 => {
+                    console.log('following getToDo in App')
+                    if (res.user.location === '') {
+                        //A location has not yet been set by the user
+                        userContext.userDispatch({ type: 'updatePlanner', payload: { planner: res2.data } })
+                    } else {
+                        getWeather(res.user.location)
+                            .then(res3 => {
+                                userContext.userDispatch({ type: 'updatePlanWeath', payload: { planner: res2.data, weather: res3.data.weather } })
+                            })
+                            .catch(err3 => {
+                                console.log('error following getWeather in App.js')
+                                console.log(err3)
+                            })
+                    }
+                })
+                .catch(err2 => {
+                    console.log('error following getToDo')
+                    console.log(err2.response)
+                })
+
+
+        } else if (res.status === 400) {    //Error, display message to user
+            setError(res.data.message)
         }
     }
 
