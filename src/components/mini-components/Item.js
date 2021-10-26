@@ -2,6 +2,7 @@ import NewForm from "../modals/NewForm";
 import { useState, useContext } from 'react';
 import { delete_item, put_item } from "../../services/user.service";
 import { UserContext } from "../../App";
+import Details from "../modals/Details";
 
 const Item = (props) => {
     //Destructure props
@@ -17,6 +18,12 @@ const Item = (props) => {
         setModal(!modal);
     }
 
+    //State and function to toggle the details component
+    const [detailModal, setDetailModal] = useState(false);
+    const toggleDetails = () => {
+        setDetailModal(!detailModal);
+    }
+
     // State must be sent to the NewForm modal and NewProject modal
     // in order to allow user to update item.
     const [source, setSource] = useState({
@@ -25,6 +32,7 @@ const Item = (props) => {
     })
 
     const handleEdit = (e) => {
+        setDetailModal(false);
         //set source in state. The data section will hold the item object
         setSource({
             data: item,
@@ -38,6 +46,7 @@ const Item = (props) => {
     }
 
     const handleDelete = async (e) => {
+        setDetailModal(false);
         let res = await delete_item(e.target.id)
         if (res.message === 'Item deleted') {
             //success, now remove item from general item and project list
@@ -105,12 +114,13 @@ const Item = (props) => {
                 <p>{item.title}</p>
             </div>
             <div className='item item-details'>
-                <button className='item-button delete-button'><i className="fas fa-info-circle"></i></button>
+                <button className='item-button detail-button' onClick={toggleDetails}><i className="fas fa-info-circle"></i></button>
                 <p>{item.due_date.slice(0, 10)}</p>
                 <button alt='edit item' className='item-button edit-button' onClick={handleEdit}><i className="far fa-edit" alt='edit item' id={item._id}></i></button>
                 <button alt='delete item' className='item-button delete-button' onClick={handleDelete}><i className="far fa-trash-alt" alt='delete item' id={item._id}></i></button>
             </div>
             {modal ? <NewForm source={source} toggleModal={toggleModal}/> : null}
+            {detailModal? <Details toggleDetails={toggleDetails} handleDelete={handleDelete} handleEdit={handleEdit} item={item}/>: null}
         </div>
     )
 }
