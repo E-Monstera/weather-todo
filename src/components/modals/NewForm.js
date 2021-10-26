@@ -4,7 +4,7 @@ import NewNote from '../mini-components/NewNote'
 import NewProject from '../mini-components/NewProject'
 
 const NewForm = (props) => {
-    const [active, setActive] = useState('note');
+    const [active, setActive] = useState(props.source.object);
     const toggleActive = (e) => {
         setActive(e.target.id);
     }
@@ -19,11 +19,11 @@ const NewForm = (props) => {
                 <div className='newForm-data'>
                     <div className='newForm-aside'>
                         <button className={active==='project'? 'active-tab': null} id='project' onClick={toggleActive}>Project</button>
-                        <button className={active==='todo'? 'active-tab': null} id='todo' onClick={toggleActive}>To Do</button>
+                        <button className={active==='todo'? 'active-tab': null} id='todo'  onClick={toggleActive}>To Do</button>
                         <button className={active==='note'? 'active-tab': null} id='note' onClick={toggleActive}>Note</button>
                     </div>
                     <div className='newForm-content'>
-                        {active === 'project'? <NewProject /> : active === 'todo'? <NewItem /> : <NewNote />}
+                        {active === 'project'? <NewProject source={props.source} toggleModal={props.toggleModal}/> : active === 'todo'? <NewItem source={props.source} toggleModal={props.toggleModal}/> : <NewNote source={props.source} toggleModal={props.toggleModal}/>}
                     {/* Depending on what is active, display the correct form */}
                     </div>
                 </div>

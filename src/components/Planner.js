@@ -11,6 +11,10 @@ const Planner = () => {
         setActive(e.target.id)
     }
 
+    //Function to update planner from API 
+    const updatePlanner = () => {
+
+    }
 
     return (
         <div className='planner-wrapper'>
