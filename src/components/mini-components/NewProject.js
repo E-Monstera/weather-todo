@@ -59,9 +59,7 @@ const NewProject = (props) => {
 
     return (
         <form onSubmit={handleSubmit} >
-            {console.log('in NewProject')}
-            {console.log(props.source)}
-            <label htmlFor='newProject'>Add New Project:</label>
+            <label htmlFor='newProject'>{props.source.data===undefined? 'Add New Project': 'Edit Project'}</label>
             <input type='text' id='newProject' name='newProject' initialvalue={project} value={project} onChange={handleChange} ></input>
             <button type='submit'>{props.source.data===undefined? 'Add New Project': 'Edit Project'}</button>
         </form>

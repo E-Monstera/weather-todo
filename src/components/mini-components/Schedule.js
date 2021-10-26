@@ -59,7 +59,7 @@ const Schedule = () => {
         //If this is true, the useeffect has NOT been called after an edit
         if (source.data === undefined) {
             assignActiveItems(active);
-        } else {
+        } else if (source.object === 'project') {
             //useeffect was called after a project was editted. 
             //active needs to be updated in order to reflex the name change
             let update = currentUser.planner.projects.filter(proj => proj.project._id === source.data._id)
@@ -68,6 +68,8 @@ const Schedule = () => {
                 id: update[0].project._id
             })
             assignActiveItems({name: update[0].project.title, id: update[0].project._id})
+        } else {
+            return;
         }
     }, [currentUser])
 
@@ -115,6 +117,29 @@ const Schedule = () => {
         toggleModal();  //Display the edit modal
     }
 
+    //Function to add a new item
+    const addItem = () => {
+        console.log(active)
+        if(active.id === 0) {
+            // User is adding an item to a general pool
+            // Set object to item so the modal opens up the NewItem component
+            // but let data be undefined to indicate that it's not associated with a project
+            setSource({
+                data: undefined,
+                object: 'item'
+            })
+        } else {
+            //User wants to add the item to a project, edit source state to 
+            //indicated which project the item wants to be saved to.
+            setSource({
+                data: active.id,
+                object: 'item'
+            })
+        }
+
+        toggleModal();
+    }
+
     return (
         <>
             <div className='planner-sidebar'>
@@ -137,6 +162,7 @@ const Schedule = () => {
                         </div>
                     </div>}
                 {activeItems ? activeItems.map(item => <Item item={item} key={item._id} />) : null}
+                <button onClick={addItem}>+</button>
             </div>
             {modal ? <NewForm toggleModal={toggleModal} source={source} /> : null}
         </>

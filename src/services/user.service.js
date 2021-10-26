@@ -28,7 +28,44 @@ const updateLocation = async (location) => {
 }
 //Methods for items
 //----------------------------------------------------------------
+const post_item = async (item) => {
+    try {
+        const config = authHeader();
+        let res = await axios.post(`${API_URL}/item`, item, config);
+        return res.data;
+    }
+    catch (err) {
+        console.log('error')
+        console.log(err)
+        return err;
+    }
+}
 
+const put_item = async (item) => {
+    try {
+        const config = authHeader();
+        let res = await axios.put(`${API_URL}/item/${item._id}`, item, config);
+        return res.data;
+    }
+    catch (err) {
+        console.log('error')
+        console.log(err)
+        return err;
+    }
+}
+
+const delete_item = async (id) => {
+    try {
+        const config = authHeader();
+        let res = await axios.delete(`${API_URL}/item/${id}`, config);
+        return res.data;
+    }
+    catch (err) {
+        console.log('error')
+        console.log(err)
+        return err;
+    }
+}
 
 //Methods for projects
 //----------------------------------------------------------------
@@ -74,4 +111,5 @@ const del_project = async (projectId) => {
 }
 
 export { getWeather, getToDo, updateLocation, 
+    post_item, delete_item, put_item,
     post_project, del_project, put_project }
