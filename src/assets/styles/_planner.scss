@@ -144,3 +144,38 @@
         // height: 100%;
     }
 }
+
+.planner-weather {
+    height: 600px;
+    overflow: auto;
+    width: 165px;
+    margin-left: 50px;
+
+    h2 {
+        text-align: center;
+    }
+    .weather-icon {
+        margin: 10px 0;
+    }
+}
+
+// Colors and styling to indicate the priority of an item
+.bullet {
+    font-size: 1.8rem;
+}
+
+.high {
+    color: crimson;
+}
+
+.med {
+    color: blue;
+}
+
+.low {
+    color: green;
+}
+
+.home-item .bullet {
+    font-size: 1.3rem;
+}

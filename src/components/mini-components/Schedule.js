@@ -13,7 +13,7 @@ const Schedule = () => {
 
     //State to hold the currently active section
     const [active, setActive] = useState({
-        name: 'today',
+        name: 'All',
         id: 0
     });
 
@@ -140,14 +140,49 @@ const Schedule = () => {
         toggleModal();
     }
 
+    //Function to sort items that are due today, tomorrow, this week, etc.
+    const sortItems = (e) => {
+        toggleActive(e);        //Used to set the section as the active section
+        //Prepare variables for use - a empty array to hold the JSX and a date to be mutated
+        let items = currentUser.planner.items;
+        let date = new Date();
+        let filter = ''
+        let arr = [];
+        
+        if (e.target.id === 'All') {
+            arr = [...currentUser.planner.items];
+        } else if (e.target.id === 'Today' || e.target.id === 'Tomorrow'){ //Filter by date
+            if (e.target.id === 'Tomorrow') {
+                date.setDate(date.getDate() + 1);
+            }
+            filter = date.toISOString().slice(0, 10);
+
+            items.forEach(item => {
+                if (item.due_date.slice(0, 10) === filter) {
+                    arr.push(item)
+                }})
+
+        } else {    //By default, filter by urgent group
+            items.forEach(item => {
+                if (item.priority === 1) {
+                    arr.push(item)
+                }
+            })
+        }
+
+        setActiveItems(arr);
+
+    }
+
     return (
         <>
             <div className='planner-sidebar'>
-                <button className={active.name === 'Today' ? 'active-tab' : null} id='Today' onClick={toggleActive}>Today</button>
-                <button className={active.name === 'Tomorrow' ? 'active-tab' : null} id='Tomorrow' onClick={toggleActive}>Tomorrow</button>
-                <button className={active.name === 'This Week' ? 'active-tab' : null} id='This Week' onClick={toggleActive}>This Week</button>
-                <button className={active.name === 'All' ? 'active-tab' : null} id='All' onClick={toggleActive}>All</button>
-                <button className={active.name === 'Urgent' ? 'active-tab' : null} id='Urgent' onClick={toggleActive}>Urgent</button>
+            
+                <button className={active.name === 'All' ? 'active-tab' : null} id='All' onClick={sortItems}>All</button>
+                <button className={active.name === 'Today' ? 'active-tab' : null} id='Today' onClick={sortItems}>Today</button>
+                <button className={active.name === 'Tomorrow' ? 'active-tab' : null} id='Tomorrow' onClick={sortItems}>Tomorrow</button>
+                {/* <button className={active.name === 'This Week' ? 'active-tab' : null} id='This Week' onClick={sortItems}>This Week</button> */}
+                <button className={active.name === 'Urgent' ? 'active-tab' : null} id='Urgent' onClick={sortItems}>Urgent</button>
                 <h2>Projects</h2>
                 {currentUser.planner.projects ? currentUser.planner.projects.map(project => <button className={active.id === project.project._id ? 'active-tab' : `${project.project.title}`} id={project.project._id} onClick={toggleActive} key={project.project._id}>{project.project.title}</button>) : null}
                 <button onClick={toggleModal}>+</button>
@@ -161,6 +196,8 @@ const Schedule = () => {
                             {activeItems.length === 0? <button id={active.id} alt='delete project' className='item-button delete-button' onClick={handle_del_proj}><i className="far fa-trash-alt" alt='delete project'></i></button> : null}
                         </div>
                     </div>}
+                    {console.log('activeitems')}
+                    {console.log(activeItems)}
                 {activeItems ? activeItems.map(item => <Item item={item} key={item._id} />) : null}
                 <button onClick={addItem}>+</button>
             </div>

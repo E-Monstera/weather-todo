@@ -12,7 +12,7 @@ const WeatherIcon = (props) => {
 
     return (
         <div className='weather-icon'>
-            <p>{dateFormat(props.day.dt).slice(0, 3)}</p>
+            <h5>{dateFormat(props.day.dt).slice(0, 3)}</h5>
             <p>{day.weather[0].description}</p>
             <div>
                 <img src={`http://openweathermap.org/img/wn/${day.weather[0].icon}.png`} alt='weather icon'></img>

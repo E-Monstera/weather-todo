@@ -84,7 +84,20 @@ const Home = () => {
         }
     }
 
-
+    //Component used in DailyPlanner for each item
+    const HomeItem = (props) => {
+        let { item } = props;
+        return (
+            <div className='home-item' key={item._id}>
+                <p className={item.priority === 1 ? 'bullet high' : item.priority === 2 ? 'bullet med' : 'bullet low'}>&bull;</p>
+                <form className='item-checkbox'>
+                    <label htmlFor='completed'>Completed?</label>
+                    <input type='checkbox' checked={item.completed} name='completed' id='completed' className={item._id} onChange={updateChecked}></input>
+                </form>
+                <h5>{htmlDecode(item.title)}</h5>
+            </div>
+        )
+    }
 
     const DailyPlanner = (props) => {
 
@@ -103,15 +116,7 @@ const Home = () => {
                 //Check the duedate for each item to see if it matches todays date
                 items.forEach(item => {
                     if (item.due_date.slice(0, 10) === date.toISOString().slice(0, 10)) {
-                        let res = (
-                            <div className='home-item' key={item._id}>
-                                <form className='item-checkbox'>
-                                    <label htmlFor='completed'>Completed?</label>
-                                    <input type='checkbox' checked={item.completed} name='completed' id='completed' className={item._id} onChange={updateChecked}></input>
-                                </form>
-                                <h5>{htmlDecode(item.title)}</h5>
-                            </div>
-                        )
+                        let res = <HomeItem item={item} key={item._id} />
                         arr.push(res);
                     }
                 })
@@ -121,36 +126,20 @@ const Home = () => {
                 //Check the duedate for each item to see if it matches todays date
                 items.forEach(item => {
                     if (item.due_date.slice(0, 10) === date.toISOString().slice(0, 10)) {
-                        let res = (
-                            <div className='home-item' key={item._id}>
-                                <form className='item-checkbox'>
-                                    <label htmlFor='completed'>Completed?</label>
-                                    <input type='checkbox' checked={item.completed} name='completed' id='completed' className={item._id} onChange={updateChecked}></input>
-                                </form>
-                                <h5>{htmlDecode(item.title)}</h5>
-                            </div>
-                        )
+                        let res = <HomeItem item={item} key={item._id} />
                         arr.push(res);
                     }
                 })
-            } else if (props.filter==='urgent') {
-            //Filter is looking for items that are 'urgent' (priority===1)
-            items.forEach(item => {
-                if (item.priority === 1) {
-                    let res = (
-                        <div className='home-item' key={item._id}>
-                            <form className='item-checkbox'>
-                                <label htmlFor='completed'>Completed?</label>
-                                <input type='checkbox' checked={item.completed} name='completed' id='completed' className={item._id} onChange={updateChecked}></input>
-                            </form>
-                            <h5>{htmlDecode(item.title)}</h5>
-                        </div>
-                    )
-                    arr.push(res);
-                }
-            })
+            } else if (props.filter === 'urgent') {
+                //Filter is looking for items that are 'urgent' (priority===1)
+                items.forEach(item => {
+                    if (item.priority === 1) {
+                        let res = <HomeItem item={item} key={item._id} />;
+                        arr.push(res);
+                    }
+                })
             } else {
-              //If prop.filter didn't match those above, return null
+                //If prop.filter didn't match those above, return null
                 return null;
             }
 

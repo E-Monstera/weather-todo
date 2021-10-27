@@ -14,6 +14,7 @@ const initialState = {
   email: '',
   primary_weather: {},
   planner: []
+  //Add imperial vs. metric for units
 }
 
 // Reducer method to either set the user in state or logout the user
@@ -32,7 +33,7 @@ const reducer = (state, action) => {
         username: action.payload.user.username,
         email: action.payload.user.email,
         primary_weather: {},
-        planner: []
+        planner: [],
       }
 
     case 'updateUserLocation':
