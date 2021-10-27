@@ -79,10 +79,6 @@ const Item = (props) => {
         newItem.completed = !currentUser.planner.items[initIndex].completed;
         newItem.title = htmlDecode(currentUser.planner.items[initIndex].title);
 
-        console.log('initial item')
-        console.log(currentUser.planner.items[initIndex])
-        console.log('item to update')
-        console.log(newItem)
         //Then, update in state
         let res = await put_item(newItem)
         if (res.message === 'item updated') {
@@ -112,10 +108,9 @@ const Item = (props) => {
             <div className='item item-title'>
                 <form className='item-checkbox'>
                     <label htmlFor='completed'>Completed?</label>
-                    {console.log('completed? ' + item.completed)}
                     <input type='checkbox' checked={item.completed} name='completed' id='completed' className={item._id} onChange={updateChecked}></input>
                 </form>
-                <p>{item.title}</p>
+                <p>{htmlDecode(item.title)}</p>
             </div>
             <div className='item item-details'>
                 <button className='item-button detail-button' onClick={toggleDetails}><i className="fas fa-info-circle"></i></button>
