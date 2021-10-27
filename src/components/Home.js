@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import { getWeather, getLocation, updateLocation, getToDo } from '../services/user.service';
 import { Link } from 'react-router-dom';
 import { UserContext } from '../App';
+import Weather from './mini-components/Weather';
 
 const Home = () => {
 
@@ -10,7 +11,7 @@ const Home = () => {
     const { currentUser } = userContext;
 
 
-    const [location, setLocation] = useState(currentUser.location);       //State to hold the user inputted location
+    const [location, setLocation] = useState('');       //State to hold the user inputted location
     const [loading, setLoading] = useState(true);
 
     // Function to make user input for a location a controlled input
@@ -32,12 +33,14 @@ const Home = () => {
         try {
             let data = await getWeather(local);  //Send the location to the backend API
             setLoading(false);
+            setLocation('');
             userContext.userDispatch({ type: 'updateWeather', payload: { weather: data.data.weather } });    //Update location in App.js - Starts Loading animation
         } catch (err) {
             console.log('error')
             console.log(err)
         }
     }
+
 
     //useEffect to disable the loading animation when App.js is done grabbing currentUser weather
     useEffect(() => {
@@ -56,37 +59,16 @@ const Home = () => {
         <div className='home'>
             {console.log(currentUser)}
             <div className='home-weather-wrapper'>
+                {currentUser.location === '' ? <h3>Current Location: None on file</h3> :
+                    <h2>{currentUser.location[0].toUpperCase()}{currentUser.location.slice(1)}</h2>}
                 <div className='weather-form'>
                     <form onSubmit={handleSubmit}>
-                        <label htmlFor='location'>Enter City</label>
-                        <input type='text' id='location' name='location' placeholder='Enter City or Zipcode' required initialvalue={location} value={location} onChange={handleChange}></input>
+                        <label htmlFor='location'>Search New Location: </label>
+                        <input type='text' id='location' name='location' placeholder='Search New City/Zipcode' required initialvalue={location} value={location} onChange={handleChange}></input>
                     </form>
                 </div>
 
-                {currentUser.location === '' ? <h3>No location on file, please search for one above</h3> :
-
-                    loading ? <h3>Loading...</h3> :
-                        <div>
-                            <div className='todays-weather'>
-                                <div className='weather-left'>
-                                    <h3>{currentUser.location}</h3>
-                                    <p>{currentUser.primary_weather.current.temp} °C</p>
-                                </div>
-                                <div className='weather-right'>
-                                    <p>Feels Like: {currentUser.primary_weather.current.feels_like} °C</p>
-                                    <p>Max Temperature: {currentUser.primary_weather.daily[0].temp.max}</p>
-                                    <p>Min Temperature: {currentUser.primary_weather.daily[0].temp.min}</p>
-                                    <p>Humidity: {currentUser.primary_weather.current.humidity}</p>
-                                </div>
-                            </div>
-                            <div className='daily-weather-container'>
-
-                            </div>
-
-                            <div className='hourly-weather-container'>
-
-                            </div>
-                        </div>}
+                {loading ? <h3>Loading...</h3> : <Weather />}
 
             </div>
             <div className='home-planner-wrapper'>
@@ -96,7 +78,7 @@ const Home = () => {
                         <Link to='/planner'>To Planner →</Link>
                         <div>
                             <h3>Due Today</h3>
-                            
+
                         </div>
                     </div>
                 </div>

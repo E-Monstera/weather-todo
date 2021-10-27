@@ -1,14 +1,164 @@
 .home {
     display: grid;
     grid-template-columns: 3fr minmax(300px, 500px);
+    // margin: 0 50px;
+    gap: 50px;
     margin: 0 50px;
     min-height: 80vh;
 }
 
 .home-weather-wrapper {
-    // border: solid;
+    display: flex;
+    padding-top: 50px;
+    flex-direction: column;
+    align-items: center;
+
+    h2 {
+        font-size: 2rem;
+    }
+    .weather-form {
+        padding: 10px 0;
+
+
+        input {
+            border-radius: 10px;
+            border: none;
+            font-size: 1.1rem;
+            padding-left: 10px;
+            background-color: rgba(360, 360, 360, .8);
+        }
+
+        label {
+            position: absolute;
+            visibility: hidden;
+        }
+    }
 }
 
+// Styling for the weather component
+.weather-wrapper {
+    width: 100%;
+
+    .current-weather {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-bottom: solid 1px black;
+        padding: 10px 0;
+        font-weight: 600;
+
+        div {
+            padding-left: 20px;
+            display: flex;
+            font-weight: 300;
+            align-items: center;
+            flex-direction: column;
+            justify-content: center;
+            
+            img {
+                height: 40px;
+            }
+        }
+    }
+}
+.todays-weather {
+    // border: solid;
+    width: 50%;
+    // border: solid;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    background-color: rgba(360, 360, 360, .7);
+    border-radius: 10px;
+    padding: 5px;
+
+    p {
+        padding: 5px 0;
+    }
+}
+
+.weather-icon {
+    background-color: rgba(360, 360, 360, .8);
+    border-radius: 10px;
+    padding: 10px;
+    margin: 0 10px;
+    width: 150px;
+}
+.weather-container {
+    display: flex;
+    flex-direction: column;
+    
+    h2 {
+        padding-bottom: 10px;
+    }
+    > div {
+        display: flex;
+        margin: 0 auto;
+    }
+    
+    .weather-icon {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+
+        >div {
+            display: flex; 
+            justify-content: center;
+            align-items: center;
+
+            >div {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                height: 70%;
+            }
+        }
+
+        p {
+            font-size: .8rem;
+        }
+
+        .prec {
+            padding-top: 5px;
+        }
+    }
+}
+
+.scroll-button {
+    border: none;
+    background-color: transparent;
+    font-size: 3rem;
+    color: rgb(71, 69, 69);
+}
+
+.scroll-button:hover {
+    transform: scale(120%);
+    
+}
+
+.hourly {
+    padding-top: 40px;
+    
+
+    .weather-scroll {
+        > div {
+            // display: flex;
+            // overflow-x: scroll;
+            // width: 80vw;
+        }
+    }
+    .hourly-container {
+        vertical-align: middle;
+        display: flex;
+        width: 70vw;
+        white-space: nowrap;
+        overflow-x: hidden;
+        overflow-y: hidden;
+        scroll-behavior: smooth;
+    }
+}
 
 
 .home-planner-wrapper {
