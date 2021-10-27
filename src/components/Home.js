@@ -1,8 +1,9 @@
 import { useState, useEffect, useContext } from 'react';
-import { getWeather, getLocation, updateLocation, getToDo } from '../services/user.service';
+import { getWeather, updateLocation, put_item } from '../services/user.service';
 import { Link } from 'react-router-dom';
 import { UserContext } from '../App';
 import Weather from './mini-components/Weather';
+import { htmlDecode } from '../services/formatting'
 
 const Home = () => {
 
@@ -55,6 +56,80 @@ const Home = () => {
         }
     }, [currentUser])
 
+    //Function to update the completed status of a post
+    const updateChecked = async (e) => {
+        //First, grab the items data and update the completed status
+        let initIndex = currentUser.planner.items.findIndex(item => item._id === e.target.className)
+        let newItem = currentUser.planner.items[initIndex];
+        newItem.completed = !newItem.completed;
+
+        // //Then, update in state
+        // let res = await put_item(newItem)
+        // if (res.message === 'item updated') {
+        //     //success, now update item in state
+        //     //First, update item in the planner.items list
+        //     const planner = currentUser.planner;
+        //     let index = planner.items.findIndex(item => item._id === res.item._id)
+        //     planner.items.splice(index, 1, res.item);
+
+        //     //Then, update item in the project, if it is part of the project
+        //     if (res.item.project !== null) {
+        //         let index2 = planner.projects.findIndex(proj => res.item.project === proj.project._id)
+        //         let index3 = planner.projects[index2].items.findIndex(item => item._id === res.item._id)
+        //         planner.projects[index2].items.splice(index3, 1, res.item)
+        //     }
+
+        //     //Then update userContext to allow live updates for user
+        //     userContext.userDispatch({ type: 'updatePlanner', payload: { planner } })
+        // }
+    }
+
+
+
+    const DailyPlanner = (props) => {
+
+        if (currentUser.planner.length === 0) {
+            //currentUser is still being set
+            return null;
+        } else {
+
+            if (props.filter === 'today') {
+                //Create an empty array to fill with items matching the query
+                let arr = [];
+
+                //Extract the due_date and create a new day to compare 
+                let items = currentUser.planner.items;
+                let today = new Date();
+
+                //Check the duedate for each item to see if it matches todays date
+                items.forEach(item => {
+                    if (item.due_date.slice(0, 10) === today.toISOString().slice(0, 10)) {
+                        let res = (
+                            <div className='home-item'>
+                                <form className='item-checkbox'>
+                                    <label htmlFor='completed'>Completed?</label>
+                                    {item.completed ?
+                                        <input type='checkbox' checked name='completed' id='completed' className={item._id} onChange={updateChecked}></input>
+                                        :
+                                        <input type='checkbox' name='completed' id='completed' className={item._id} onChange={updateChecked}></input>
+                                    }
+                                </form>
+                                <h5>{htmlDecode(item.title)}</h5>
+                            </div>
+                        )
+                        arr.push(res);
+                    } else {
+
+                    }
+                })
+                return arr;
+            } else {
+                return null;
+            }
+        }
+    }
+
+
     return (
         <div className='home'>
             {console.log(currentUser)}
@@ -78,7 +153,7 @@ const Home = () => {
                         <Link to='/planner'>To Planner →</Link>
                         <div>
                             <h3>Due Today</h3>
-
+                            <DailyPlanner filter='today' />
                         </div>
                     </div>
                 </div>

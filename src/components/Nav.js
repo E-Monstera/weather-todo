@@ -4,9 +4,8 @@ import { logout } from '../services/auth.service';
 import { UserContext } from '../App';
 const Nav = () => {
 
-    // Grab UserContext from app.js and destructure currentUser from it
+    // Grab UserContext from app.js 
     const userContext = useContext(UserContext);
-    const { currentUser } = userContext;
 
 
     const [dropdown, setDropdown] = useState(false);

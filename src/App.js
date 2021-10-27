@@ -32,7 +32,7 @@ const reducer = (state, action) => {
         username: action.payload.user.username,
         email: action.payload.user.email,
         primary_weather: {},
-        planner: {}
+        planner: []
       }
 
     case 'updateUserLocation':

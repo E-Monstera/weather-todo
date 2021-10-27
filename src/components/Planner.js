@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react';
-import { getToDo } from '../services/user.service';
+import { useState } from 'react';
 import Schedule from './mini-components/Schedule'
 import Calendar from './mini-components/Calendar'
 import Notes from './mini-components/Notes'

@@ -3,6 +3,7 @@ import { useState, useContext } from 'react';
 import { delete_item, put_item } from "../../services/user.service";
 import { UserContext } from "../../App";
 import Details from "../modals/Details";
+import { htmlDecode } from "../../services/formatting";
 
 const Item = (props) => {
     //Destructure props
@@ -39,8 +40,6 @@ const Item = (props) => {
             object: 'item'
         })
 
-        console.log(item)
-        console.log(item.due_date.toString())
         toggleModal();
         //display the modal
     }
@@ -76,12 +75,20 @@ const Item = (props) => {
     const updateChecked = async (e) => {
         //First, grab the items data and update the completed status
         let initIndex = currentUser.planner.items.findIndex(item => item._id === e.target.className)
-        let newItem = currentUser.planner.items[initIndex];
-        newItem.completed = !newItem.completed;
+        let newItem = Object.assign({}, currentUser.planner.items[initIndex]);
+        newItem.completed = !currentUser.planner.items[initIndex].completed;
+        newItem.title = htmlDecode(currentUser.planner.items[initIndex].title);
 
+        console.log('initial item')
+        console.log(currentUser.planner.items[initIndex])
+        console.log('item to update')
+        console.log(newItem)
         //Then, update in state
-        let res = await put_item(item)
+        let res = await put_item(newItem)
         if (res.message === 'item updated') {
+            console.log('done')
+            console.log(res)
+            
             //success, now update item in state
             //First, update item in the planner.items list
             const planner = currentUser.planner;
@@ -105,11 +112,8 @@ const Item = (props) => {
             <div className='item item-title'>
                 <form className='item-checkbox'>
                     <label htmlFor='completed'>Completed?</label>
-                    {item.completed? 
-                    <input type='checkbox' checked name='completed' id='completed' className={item._id} onChange={updateChecked}></input>
-                    :
-                    <input type='checkbox' name='completed' id='completed' className={item._id} onChange={updateChecked}></input>
-                    }
+                    {console.log('completed? ' + item.completed)}
+                    <input type='checkbox' checked={item.completed} name='completed' id='completed' className={item._id} onChange={updateChecked}></input>
                 </form>
                 <p>{item.title}</p>
             </div>

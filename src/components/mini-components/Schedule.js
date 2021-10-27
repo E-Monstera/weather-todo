@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
-import { getToDo, del_project } from '../../services/user.service';
+import { del_project } from '../../services/user.service';
 import Item from './Item';
 import NewForm from '../modals/NewForm';
 import { UserContext } from '../../App';
@@ -82,7 +82,7 @@ const Schedule = () => {
     //Function to handle deleting a project
     const handle_del_proj = async (e) => {
         //Delete the project in state
-        let res = await del_project(active.id);
+        await del_project(active.id);
         //Update the active project to avoid errors
         setActive({
             name: 'today',

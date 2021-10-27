@@ -81,7 +81,7 @@ const NewItem = (props) => {
             return;
         }
 
-    }, [])
+    }, [props.source.data])
 
     return (
         <form onSubmit={handleSubmit} >

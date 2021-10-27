@@ -1,4 +1,4 @@
-import { useState, useContext, useRef, useEffect } from 'react';
+import { useState, useContext, useRef } from 'react';
 import { UserContext } from '../../App';
 import WeatherIcon from './WeatherIcon';
 import HourlyIcon from './HourlyIcon';
