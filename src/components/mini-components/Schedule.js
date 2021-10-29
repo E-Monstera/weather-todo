@@ -48,7 +48,7 @@ const Schedule = () => {
         } else {
             //Active tab belongs to a project, find out which project and display items
             let index = currentUser.planner.projects.findIndex(proj => {
-                return proj.project._id === title.id
+                return proj._id === title.id
             })
             setActiveItems(currentUser.planner.projects[index].items)
         }
@@ -62,12 +62,12 @@ const Schedule = () => {
         } else if (source.object === 'project') {
             //useeffect was called after a project was editted. 
             //active needs to be updated in order to reflex the name change
-            let update = currentUser.planner.projects.filter(proj => proj.project._id === source.data._id)
+            let update = currentUser.planner.projects.filter(proj => proj._id === source.data._id)
             setActive({
-                name: update[0].project.title,
-                id: update[0].project._id
+                name: update[0].title,
+                id: update[0]._id
             })
-            assignActiveItems({name: update[0].project.title, id: update[0].project._id})
+            assignActiveItems({name: update[0].title, id: update[0]._id})
         } else {
             return;
         }
@@ -91,7 +91,7 @@ const Schedule = () => {
 
         // //Now, add the project to currentUser.planner. This ensures a live update to the users planner
         let planner = currentUser.planner;
-        let index = planner.projects.findIndex(proj => proj.project._id === active.id)
+        let index = planner.projects.findIndex(proj => proj._id === active.id)
         planner.projects.splice(index, 1);
         userContext.userDispatch({ type: 'updatePlanner', payload: { planner } })   
     }
@@ -106,11 +106,11 @@ const Schedule = () => {
     const handle_edit_proj = (e) => {
         //First, find the project to send to the NewProject form
         let index = currentUser.planner.projects.findIndex(proj => {
-            return proj.project._id === e.target.id
+            return proj._id === e.target.id
         })
 
         setSource({
-            data: currentUser.planner.projects[index].project,
+            data: currentUser.planner.projects[index],
             object: 'project'
         })
 
@@ -162,12 +162,20 @@ const Schedule = () => {
                     arr.push(item)
                 }})
 
-        } else {    //By default, filter by urgent group
+        } else if (e.target.id === 'Urgent' ){    // filter by urgent group
             items.forEach(item => {
                 if (item.priority === 1) {
                     arr.push(item)
                 }
             })
+        } else {
+            // Sort by category
+            console.log('would sort by category')
+            // items.forEach(item => {
+            //     if (item.project._id === e.target.id) {
+            //         arr.push(item)
+            //     }
+            // })
         }
 
         setActiveItems(arr);
@@ -184,7 +192,7 @@ const Schedule = () => {
                 {/* <button className={active.name === 'This Week' ? 'active-tab' : null} id='This Week' onClick={sortItems}>This Week</button> */}
                 <button className={active.name === 'Urgent' ? 'active-tab' : null} id='Urgent' onClick={sortItems}>Urgent</button>
                 <h2>Projects</h2>
-                {currentUser.planner.projects ? currentUser.planner.projects.map(project => <button className={active.id === project.project._id ? 'active-tab' : `${project.project.title}`} id={project.project._id} onClick={toggleActive} key={project.project._id}>{project.project.title}</button>) : null}
+                {currentUser.planner.projects ? currentUser.planner.projects.map(project => <button className={active.id === project._id ? 'active-tab' : `${project.title}`} id={project._id} onClick={sortItems} key={project._id}>{project.title}</button>) : null}
                 <button onClick={toggleModal}>+</button>
             </div>
             <div className='planner-content'>
@@ -196,8 +204,9 @@ const Schedule = () => {
                             {activeItems.length === 0? <button id={active.id} alt='delete project' className='item-button delete-button' onClick={handle_del_proj}><i className="far fa-trash-alt" alt='delete project'></i></button> : null}
                         </div>
                     </div>}
-                    {console.log('activeitems')}
-                    {console.log(activeItems)}
+                    {/* {console.log('activeitems')}
+                    {console.log(activeItems)} */}
+                    {console.log(currentUser)}
                 {activeItems ? activeItems.map(item => <Item item={item} key={item._id} />) : null}
                 <button onClick={addItem}>+</button>
             </div>

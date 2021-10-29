@@ -100,8 +100,7 @@ const Home = () => {
     }
 
     const DailyPlanner = (props) => {
-
-        if (currentUser.planner.length === 0) {
+        if (currentUser.planner.length === 0 || currentUser.planner.length === undefined) {
             //currentUser is still being set
             return null;
         } else {
@@ -119,6 +118,18 @@ const Home = () => {
                         let res = <HomeItem item={item} key={item._id} />
                         arr.push(res);
                     }
+
+
+                    //prop.filter matched an if statement above. The if statements populated arr with
+                    //items if they matched the date. Now, check if any items matched the requirements.
+                    //if nothing matched, arr is empty so return an 'error' message
+                    if (arr.length !== 0) {
+                        return arr;
+                    } else {
+                        <div className='home-item'>
+                            <h5>Nothing due today</h5>
+                        </div>
+                    }
                 })
             } else if (props.filter === 'tomorrow') {
                 date.setDate(date.getDate() + 1)
@@ -129,6 +140,18 @@ const Home = () => {
                         let res = <HomeItem item={item} key={item._id} />
                         arr.push(res);
                     }
+
+
+                    //prop.filter matched an if statement above. The if statements populated arr with
+                    //items if they matched the date. Now, check if any items matched the requirements.
+                    //if nothing matched, arr is empty so return an 'error' message
+                    if (arr.length !== 0) {
+                        return arr;
+                    } else {
+                        <div className='home-item'>
+                            <h5>Nothing due today</h5>
+                        </div>
+                    }
                 })
             } else if (props.filter === 'urgent') {
                 //Filter is looking for items that are 'urgent' (priority===1)
@@ -137,22 +160,36 @@ const Home = () => {
                         let res = <HomeItem item={item} key={item._id} />;
                         arr.push(res);
                     }
+
+
+                    //prop.filter matched an if statement above. The if statements populated arr with
+                    //items if they matched the date. Now, check if any items matched the requirements.
+                    //if nothing matched, arr is empty so return an 'error' message
+                    if (arr.length !== 0) {
+                        return arr;
+                    } else {
+                        <div className='home-item'>
+                            <h5>Nothing due today</h5>
+                        </div>
+                    }
                 })
             } else {
                 //If prop.filter didn't match those above, return null
                 return null;
             }
 
+
             //prop.filter matched an if statement above. The if statements populated arr with
             //items if they matched the date. Now, check if any items matched the requirements.
             //if nothing matched, arr is empty so return an 'error' message
-            if (arr.length !== 0) {
-                return arr;
-            } else {
-                <div className='home-item'>
-                    <h5>Nothing due today</h5>
-                </div>
-            }
+            // if (arr.length !== 0) {
+            //     return arr;
+            // } else {
+            //     <div className='home-item'>
+            //         <h5>Nothing due today</h5>
+            //     </div>
+            // }
+
         }
     }
 

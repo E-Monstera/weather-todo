@@ -35,7 +35,6 @@ const Login = (props) => {
             // Now that the users basic data has been collected, grab their weather data and planner
             getToDo()
                 .then(res2 => {
-                    console.log('following getToDo in App')
                     if (res.user.location === '') {
                         //A location has not yet been set by the user
                         userContext.userDispatch({ type: 'updatePlanner', payload: { planner: res2.data } })
