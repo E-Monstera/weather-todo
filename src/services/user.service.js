@@ -110,6 +110,48 @@ const del_project = async (projectId) => {
     }
 }
 
+//Methods for notes
+//----------------------------------------------------------------
+const post_note = async (note) => {
+    try {
+        const config = authHeader();
+        let res = await axios.post(`${API_URL}/note`, note, config);
+        return res.data;
+    }
+    catch (err) {
+        console.log('error')
+        console.log(err)
+        return err;
+    }
+}
+
+const put_note = async (note) => {
+    try {
+        const config = authHeader();
+        let res = await axios.put(`${API_URL}/note/${note._id}`, note, config);
+        return res.data;
+    }
+    catch (err) {
+        console.log('error')
+        console.log(err)
+        return err;
+    }
+}
+
+const delete_note = async (id) => {
+    try {
+        const config = authHeader();
+        let res = await axios.delete(`${API_URL}/note/${id}`, config);
+        return res.data;
+    }
+    catch (err) {
+        console.log('error')
+        console.log(err)
+        return err;
+    }
+}
+
 export { getWeather, getToDo, updateLocation, 
     post_item, delete_item, put_item,
-    post_project, del_project, put_project }
+    post_project, del_project, put_project,
+    post_note, delete_note, put_note, }

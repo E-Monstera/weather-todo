@@ -24,7 +24,7 @@ const NewForm = (props) => {
                     </div>
                     <div className='newForm-content'>
                         {console.log(props.source)}
-                        {active === 'project'? <NewProject source={props.source} toggleModal={props.toggleModal}/> : active === 'item'? <NewItem source={props.source} toggleModal={props.toggleModal}/> : <NewNote source={props.source} toggleModal={props.toggleModal}/>}
+                        {active === 'project'? <NewProject source={props.source} toggleModal={props.toggleModal}/> : active === 'item'? <NewItem source={props.source} toggleModal={props.toggleModal}/> : <NewNote source={props.source} toggleModal={props.toggleModal} clearSource={props.clearSource}/>}
                     {/* Depending on what is active, display the correct form */}
                     </div>
                 </div>

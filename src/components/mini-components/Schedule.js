@@ -111,9 +111,6 @@ const Schedule = () => {
 
     // useEffect to display only items that are due today - only engaged in page load and following edits
     useEffect(() => {
-        console.log('in useeffect')
-        console.log(source)
-        console.log(active)
         if (Object.keys(currentUser.planner).length === 0) {  //currentUser still hasn't been set in App.js - Wait for it to be set
             return;
         } else if ((source.data === undefined && source.object === '') || source.object === 'item') {
@@ -204,7 +201,7 @@ const Schedule = () => {
 
 
     return (
-        <>
+        <div className='schedule-wrapper'>
             <div className='planner-sidebar'>
 
                 <button className={active.name === 'All' ? 'active-tab' : null} id='All' onClick={toggleActive}>All</button>
@@ -231,7 +228,7 @@ const Schedule = () => {
                 <button onClick={addItem}>+</button>
             </div>
             {modal ? <NewForm toggleModal={toggleModal} source={source} /> : null}
-        </>
+        </div>
     )
 }
 
