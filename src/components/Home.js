@@ -13,7 +13,7 @@ const Home = () => {
 
 
     const [location, setLocation] = useState('');       //State to hold the user inputted location
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(true);       //State to serve as a flag to users when data is being fetched
 
     // Function to make user input for a location a controlled input
     const handleChange = (e) => {
@@ -67,17 +67,9 @@ const Home = () => {
         let res = await put_item(newItem)
         if (res.message === 'item updated') {
             //success, now update item in state
-            //First, update item in the planner.items list
             const planner = currentUser.planner;
             let index = planner.items.findIndex(item => item._id === res.item._id)
             planner.items.splice(index, 1, res.item);
-
-            //Then, update item in the project, if it is part of the project
-            if (res.item.project !== null) {
-                let index2 = planner.projects.findIndex(proj => res.item.project === proj.project._id)
-                let index3 = planner.projects[index2].items.findIndex(item => item._id === res.item._id)
-                planner.projects[index2].items.splice(index3, 1, res.item)
-            }
 
             //Then update userContext to allow live updates for user
             userContext.userDispatch({ type: 'updatePlanner', payload: { planner } })
@@ -100,7 +92,7 @@ const Home = () => {
     }
 
     const DailyPlanner = (props) => {
-        if (currentUser.planner.length === 0 || currentUser.planner.length === undefined) {
+        if (Object.keys(currentUser.planner).length === 0) {
             //currentUser is still being set
             return null;
         } else {
@@ -108,10 +100,11 @@ const Home = () => {
             let items = currentUser.planner.items;
             let arr = [];
             let date = new Date();
+            let message = '';        //Allows a custom message to be set if nothing is actively due for that section
 
             if (props.filter === 'today') {
                 //Extract the due_date and create a new day to compare 
-
+                message = 'Nothing Due Today';
                 //Check the duedate for each item to see if it matches todays date
                 items.forEach(item => {
                     if (item.due_date.slice(0, 10) === date.toISOString().slice(0, 10)) {
@@ -119,21 +112,10 @@ const Home = () => {
                         arr.push(res);
                     }
 
-
-                    //prop.filter matched an if statement above. The if statements populated arr with
-                    //items if they matched the date. Now, check if any items matched the requirements.
-                    //if nothing matched, arr is empty so return an 'error' message
-                    if (arr.length !== 0) {
-                        return arr;
-                    } else {
-                        <div className='home-item'>
-                            <h5>Nothing due today</h5>
-                        </div>
-                    }
                 })
             } else if (props.filter === 'tomorrow') {
                 date.setDate(date.getDate() + 1)
-
+                message = 'Nothing Due Tomorrow';
                 //Check the duedate for each item to see if it matches todays date
                 items.forEach(item => {
                     if (item.due_date.slice(0, 10) === date.toISOString().slice(0, 10)) {
@@ -141,19 +123,9 @@ const Home = () => {
                         arr.push(res);
                     }
 
-
-                    //prop.filter matched an if statement above. The if statements populated arr with
-                    //items if they matched the date. Now, check if any items matched the requirements.
-                    //if nothing matched, arr is empty so return an 'error' message
-                    if (arr.length !== 0) {
-                        return arr;
-                    } else {
-                        <div className='home-item'>
-                            <h5>Nothing due today</h5>
-                        </div>
-                    }
                 })
             } else if (props.filter === 'urgent') {
+                message = 'Nothing Due Urgently';
                 //Filter is looking for items that are 'urgent' (priority===1)
                 items.forEach(item => {
                     if (item.priority === 1) {
@@ -161,17 +133,6 @@ const Home = () => {
                         arr.push(res);
                     }
 
-
-                    //prop.filter matched an if statement above. The if statements populated arr with
-                    //items if they matched the date. Now, check if any items matched the requirements.
-                    //if nothing matched, arr is empty so return an 'error' message
-                    if (arr.length !== 0) {
-                        return arr;
-                    } else {
-                        <div className='home-item'>
-                            <h5>Nothing due today</h5>
-                        </div>
-                    }
                 })
             } else {
                 //If prop.filter didn't match those above, return null
@@ -179,16 +140,19 @@ const Home = () => {
             }
 
 
+
             //prop.filter matched an if statement above. The if statements populated arr with
             //items if they matched the date. Now, check if any items matched the requirements.
             //if nothing matched, arr is empty so return an 'error' message
-            // if (arr.length !== 0) {
-            //     return arr;
-            // } else {
-            //     <div className='home-item'>
-            //         <h5>Nothing due today</h5>
-            //     </div>
-            // }
+            if (arr.length !== 0) {
+                return arr;
+            } else {
+                return (
+                    <div className='home-item'>
+                        <h5>{message}</h5>
+                    </div>
+                )
+            }
 
         }
     }

@@ -1,3 +1,4 @@
+import { htmlDecode } from "../../services/formatting";
 
 
 const Details = (props) => {
@@ -12,12 +13,12 @@ const Details = (props) => {
                     <h2>Details...</h2>
                     <button className='x-button' onClick={props.toggleDetails}>X</button>
                 </div>
-                <h1>{item.title}</h1>
+                <h1>{htmlDecode(item.title)}</h1>
                 <p>Description:</p>
-                <p>{item.desc}</p>
-                <p>Priority: {item.priority === 1 ? 'Urgent' : item.priority === 2 ? 'Medium' : 'Mild'}</p>
-                <p>Project: {item.project} </p>
-                <p>Due Date: {item.due_date}</p>
+                <p>{htmlDecode(item.desc)}</p>
+                <p>Priority: {item.priority === 1 ? 'Urgent' : item.priority === 2 ? 'Medium' : 'Low'}</p>
+                {item.project === null ? <p>No Associated Project</p> : <p>Project: {htmlDecode(item.project.title)} </p>}
+                <p>Due Date: {item.due_date.slice(0, 10)}</p>
                 <p>Completed: {item.completed ? 'Yes' : 'No'}</p>
 
                 <button alt='edit item' className='item-button edit-button' onClick={props.handleEdit}><i className="far fa-edit" alt='edit item' id={item._id}></i></button>

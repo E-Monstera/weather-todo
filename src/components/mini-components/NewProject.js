@@ -24,25 +24,17 @@ const NewProject = (props) => {
         let planner = currentUser.planner;
         if(props.source.data === undefined) {
             //The project is a new project
-            console.log('would submit new project to database ' + project)
             let res = await post_project(project);
             //Now, add the project to currentUser.planner. This ensures a live update to the users planner
-            planner.projects.push({project: res.project, items: []})
+            planner.projects.push(res.project)
         } else {
-            console.log('editting a rpoject')
             //The project is an existing one that is being editted
             let res = await put_project(project, props.source.data._id)
-            let index = planner.projects.findIndex(proj => proj.project._id === props.source.data._id);
-            let items = planner.projects[index]
-            console.log('items')
-            console.log(items)
-            planner.projects.splice(index, 1, {project: res.project, items: items.items})
-            console.log(`eddited post at: ${index}`)
-            console.log(currentUser.planner)
+            // Now that the project is updated, update it in state
+            let index = planner.projects.findIndex(proj => proj._id === props.source.data._id);
+            planner.projects.splice(index, 1, res.project)
         }
-        console.log('updated planner')
-        console.log(planner)
-        userContext.userDispatch({ type: 'updatePlanner', payload: { planner } })   
+        userContext.userDispatch({ type: 'updatePlanner', payload: { planner } })       //Updating context for active page update
         props.toggleModal();    //Close the modal
     }
 

@@ -45,26 +45,14 @@ const Item = (props) => {
     }
 
     const handleDelete = async (e) => {
-        setDetailModal(false);
+        setDetailModal(false);                  //Close the detail modal if it was opened
         let res = await delete_item(e.target.id)
         if (res.message === 'Item deleted') {
-            //success, now remove item from general item and project list
+            //success, now remove item from items
             const planner = currentUser.planner;
             //First, remove item from general list
             let index = planner.items.findIndex(item => item._id === e.target.id)
-            let deletedItem = planner.items[index];
             planner.items.splice(index, 1);
-
-            //Then, remove item from a project list if it has an associated project
-            //if true, then it doesn't have an associated project
-            console.log('deleted item')
-            console.log(deletedItem)
-            if (deletedItem.project !== null && deletedItem.project !== undefined) {
-                let index2 = planner.projects.findIndex(proj => deletedItem.project === proj.project._id)
-                console.log('index2: '+index2)
-                let index3 = planner.projects[index2].items.findIndex(item => item._id === e.target.id)
-                planner.projects[index2].items.splice(index3, 1)
-            }
 
             //Update usercontext to allow live updates for user
             userContext.userDispatch({ type: 'updatePlanner', payload: { planner } })
@@ -82,21 +70,11 @@ const Item = (props) => {
         //Then, update in state
         let res = await put_item(newItem)
         if (res.message === 'item updated') {
-            console.log('done')
-            console.log(res)
-            
             //success, now update item in state
             //First, update item in the planner.items list
             const planner = currentUser.planner;
             let index = planner.items.findIndex(item => item._id === res.item._id)
             planner.items.splice(index, 1, res.item);
-
-            //Then, update item in the project, if it is part of the project
-            if (res.item.project !== null) {
-                let index2 = planner.projects.findIndex(proj => res.item.project === proj.project._id)
-                let index3 = planner.projects[index2].items.findIndex(item => item._id === res.item._id)
-                planner.projects[index2].items.splice(index3, 1, res.item)
-            }
 
             //Then update userContext to allow live updates for user
             userContext.userDispatch({ type: 'updatePlanner', payload: { planner } })

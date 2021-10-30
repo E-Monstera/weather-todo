@@ -13,7 +13,7 @@ const initialState = {
   location: '',
   email: '',
   primary_weather: {},
-  planner: []
+  planner: {}
   //Add imperial vs. metric for units
 }
 
@@ -33,7 +33,7 @@ const reducer = (state, action) => {
         username: action.payload.user.username,
         email: action.payload.user.email,
         primary_weather: {},
-        planner: [],
+        planner: {},
       }
 
     case 'updateUserLocation':
@@ -55,8 +55,6 @@ const reducer = (state, action) => {
       }
 
       case 'updatePlanWeath':
-        console.log('updateplanweath')
-        console.log(action.payload)
         return {
           ...state,
           primary_weather: action.payload.weather,
@@ -86,7 +84,6 @@ function App() {
           // Now that the users basic data has been collected, grab their weather data and planner
           getToDo()
           .then(res2 => {
-            console.log('following getToDo in App')
             if (response.data.user.location === '') {
               //A location has not yet been set by the user
               dispatch({ type: 'updatePlanner', payload: { planner: res2.data } })
