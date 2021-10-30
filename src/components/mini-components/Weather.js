@@ -2,6 +2,7 @@ import { useState, useContext, useRef } from 'react';
 import { UserContext } from '../../App';
 import WeatherIcon from './WeatherIcon';
 import HourlyIcon from './HourlyIcon';
+import { formatUnits } from '../../services/formatting';
 
 const Weather = () => {
 
@@ -11,16 +12,6 @@ const Weather = () => {
 
     //Ref to control the scroll of the hourly weather
     const scrollRef = useRef();
-
-
-    const [units, setUnits] = useState('c');
-    const formatUnits = (temp) => {
-        if (units === 'f') {
-            return `${temp} °F`
-        } else {
-            return `${temp} °C`
-        }
-    }
 
     const formatDate = (date) => {
         let newDate = new Date(date * 1000);
@@ -62,14 +53,14 @@ const Weather = () => {
             </div>
             <div className='todays-weather'>
                 <div className='weather-left'>
-                    <p>Current Temperature: {formatUnits(currentUser.primary_weather.current.temp)}</p>
+                    <p>Current Temperature: {formatUnits(currentUser.units, currentUser.primary_weather.current.temp)}</p>
                     <p>Humidity: {currentUser.primary_weather.current.humidity}%</p>
-                    <p>Feels Like: {formatUnits(currentUser.primary_weather.current.feels_like)}</p>
+                    <p>Feels Like: {formatUnits(currentUser.units, currentUser.primary_weather.current.feels_like)}</p>
                 </div>
                 <div className='weather-right'>
                     <p>Wind Speed: {currentUser.primary_weather.current.wind_speed} m/s</p>
-                    <p>High: {formatUnits(currentUser.primary_weather.daily[0].temp.max)}</p>
-                    <p>Low: {formatUnits(currentUser.primary_weather.daily[0].temp.min)}</p>
+                    <p>High: {formatUnits(currentUser.units,  currentUser.primary_weather.daily[0].temp.max)}</p>
+                    <p>Low: {formatUnits(currentUser.units,  currentUser.primary_weather.daily[0].temp.min)}</p>
                 </div>
                 <div>
                     <p>Sunrise: {formatDate(currentUser.primary_weather.current.sunrise)}</p>
@@ -80,7 +71,7 @@ const Weather = () => {
             <div className='daily weather-container'>
                 <h2>Daily Forecast:</h2>
                 <div>
-                    {currentUser.primary_weather.daily.map(day => <WeatherIcon day={day} key={day.dt} formatUnits={formatUnits} />)}
+                    {currentUser.primary_weather.daily.map(day => <WeatherIcon day={day} key={day.dt} />)}
                 </div>
             </div>
 
@@ -89,7 +80,7 @@ const Weather = () => {
                 <div className='weather-scroll'>
                     <button className='scroll-button' id='left' onMouseDown={startScroll} onMouseUp={stopScroll}>&#10094;</button>
                     <div className='hourly-container' ref={scrollRef}>
-                        {currentUser.primary_weather.hourly.map(hour => <HourlyIcon hour={hour} key={hour.dt} formatUnits={formatUnits} />)}
+                        {currentUser.primary_weather.hourly.map(hour => <HourlyIcon hour={hour} key={hour.dt}/>)}
                     </div>
                     <button className='scroll-button' id='right' onMouseDown={startScroll} onMouseUp={stopScroll}>&#10095;</button>
                 </div>

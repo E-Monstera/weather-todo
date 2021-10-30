@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
-import { getWeather, updateLocation, put_item } from '../services/user.service';
+import { getWeather, updateLocation, put_item, updateUnits } from '../services/user.service';
 import { Link } from 'react-router-dom';
 import { UserContext } from '../App';
 import Weather from './mini-components/Weather';
@@ -157,17 +157,38 @@ const Home = () => {
         }
     }
 
+    // Function to change the users preferred units
+    const handleUnits = async () => {
+        let res = await updateUnits();      //Update in db
+        if (res.status === 200) {
+            //Updated state for live updates
+            userContext.userDispatch({ type: 'updateUnits', payload: { units: res.data.user.units } })
+        } else {
+            console.log('error')
+            console.log(res)
+        }
+
+    }
+
 
     return (
         <div className='home'>
             <div className='home-weather-wrapper'>
-                {currentUser.location === '' ? <h3>Current Location: None on file</h3> :
+                {currentUser.location === '' ? <h3>No Location on File</h3> :
                     <h2>{currentUser.location[0].toUpperCase()}{currentUser.location.slice(1)}</h2>}
                 <div className='weather-form'>
                     <form onSubmit={handleSubmit}>
                         <label htmlFor='location'>Search New Location: </label>
                         <input type='text' id='location' name='location' placeholder='Search New City/Zipcode' required initialvalue={location} value={location} onChange={handleChange}></input>
                     </form>
+                    <div className='switch-wrapper'>
+                        <p>Units:</p>
+                        <label className="switch" onChange={handleUnits}>
+                            <input type="checkbox" />
+                            <span className="slider round"></span>
+                        </label>
+                        <p>{currentUser.units === 'imperial' ? 'Imperial' : 'Metric'}</p>
+                    </div>
                 </div>
 
                 {loading ? <h3>Loading...</h3> : <Weather />}

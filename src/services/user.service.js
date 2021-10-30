@@ -26,6 +26,19 @@ const updateLocation = async (location) => {
         return { status: err.response.status, data: err.response.data };
     }
 }
+
+const updateUnits = async () => {
+    try {
+        const config = authHeader();
+        const resp = await axios.put(`${API_URL}/user/units`, {}, config);
+        return resp;
+    } catch (err) {
+        console.log('ERROR')
+        return { status: err.response.status, data: err.response.data };
+    }
+}
+
+
 //Methods for items
 //----------------------------------------------------------------
 const post_item = async (item) => {
@@ -151,7 +164,7 @@ const delete_note = async (id) => {
     }
 }
 
-export { getWeather, getToDo, updateLocation, 
+export { getWeather, getToDo, updateLocation, updateUnits,
     post_item, delete_item, put_item,
     post_project, del_project, put_project,
     post_note, delete_note, put_note, }

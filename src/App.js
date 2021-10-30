@@ -13,7 +13,8 @@ const initialState = {
   location: '',
   email: '',
   primary_weather: {},
-  planner: {}
+  planner: {},
+  units: 'imperial'
   //Add imperial vs. metric for units
 }
 
@@ -34,12 +35,19 @@ const reducer = (state, action) => {
         email: action.payload.user.email,
         primary_weather: {},
         planner: {},
+        units: action.payload.user.units
       }
 
     case 'updateUserLocation':
       return {
         ...state,
         location: action.payload.location
+      }
+
+    case 'updateUnits':
+      return {
+        ...state,
+        units: action.payload.units
       }
 
     case 'updatePlanner':
@@ -54,12 +62,12 @@ const reducer = (state, action) => {
         primary_weather: action.payload.weather
       }
 
-      case 'updatePlanWeath':
-        return {
-          ...state,
-          primary_weather: action.payload.weather,
-          planner: action.payload.planner
-        }
+    case 'updatePlanWeath':
+      return {
+        ...state,
+        primary_weather: action.payload.weather,
+        planner: action.payload.planner
+      }
 
     case 'logoutUser':
       return initialState
@@ -83,25 +91,25 @@ function App() {
 
           // Now that the users basic data has been collected, grab their weather data and planner
           getToDo()
-          .then(res2 => {
-            if (response.data.user.location === '') {
-              //A location has not yet been set by the user
-              dispatch({ type: 'updatePlanner', payload: { planner: res2.data } })
-            } else {
-              getWeather(response.data.user.location)
-              .then(res3 => {
-                dispatch({ type: 'updatePlanWeath', payload: { planner: res2.data, weather: res3.data.weather } })
-              })
-              .catch(err3 => {
-                console.log('error following getWeather in App.js')
-                console.log(err3)
-              })
-            }
-          })
-          .catch(err2 => {
-            console.log('error following getToDo')
-            console.log(err2.response)
-        })
+            .then(res2 => {
+              if (response.data.user.location === '') {
+                //A location has not yet been set by the user
+                dispatch({ type: 'updatePlanner', payload: { planner: res2.data } })
+              } else {
+                getWeather(response.data.user.location)
+                  .then(res3 => {
+                    dispatch({ type: 'updatePlanWeath', payload: { planner: res2.data, weather: res3.data.weather } })
+                  })
+                  .catch(err3 => {
+                    console.log('error following getWeather in App.js')
+                    console.log(err3)
+                  })
+              }
+            })
+            .catch(err2 => {
+              console.log('error following getToDo')
+              console.log(err2.response)
+            })
 
         })
         .catch(error => {

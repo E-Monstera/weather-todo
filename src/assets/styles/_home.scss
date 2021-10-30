@@ -28,11 +28,20 @@
             background-color: rgba(360, 360, 360, .8);
         }
 
-        label {
-            position: absolute;
-            visibility: hidden;
+        form {
+            label {
+                position: absolute;
+                visibility: hidden;
+            }
         }
     }
+}
+
+.switch-wrapper {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding-top: 10px;
 }
 
 // Styling for the weather component

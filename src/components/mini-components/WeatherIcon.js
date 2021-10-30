@@ -1,14 +1,14 @@
-
+import { formatUnits, dateFormat } from "../../services/formatting";
+import { useContext } from 'react';
+import { UserContext } from "../../App";
 
 const WeatherIcon = (props) => {
-    //Destructure props
-    const { day, formatUnits } = props;
+    // Grab UserContext from app.js and destructure currentUser from it
+    const userContext = useContext(UserContext);
+    const { currentUser } = userContext;
 
-    //Format the date
-    const dateFormat = (date) => {
-        let newDate = new Date(date * 1000);
-        return (newDate.toString());
-    }
+    //Destructure props
+    const { day } = props;
 
     return (
         <div className='weather-icon'>
@@ -17,8 +17,8 @@ const WeatherIcon = (props) => {
             <div>
                 <img src={`http://openweathermap.org/img/wn/${day.weather[0].icon}.png`} alt='weather icon'></img>
                 <div>
-                    <p>{formatUnits(day.temp.max)}</p>
-                    <p>{formatUnits(day.temp.min)}</p>
+                    <p>{formatUnits(currentUser.units, day.temp.max)}</p>
+                    <p>{formatUnits(currentUser.units, day.temp.min)}</p>
                 </div>
             </div>
             <p className='prec'>Precipitation: {Math.round(day.pop * 100)}%</p>
