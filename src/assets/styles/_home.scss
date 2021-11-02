@@ -39,9 +39,9 @@
 
 .switch-wrapper {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
-    padding-top: 10px;
+    padding-bottom: 5px;
 }
 
 // Styling for the weather component
@@ -50,44 +50,52 @@
 
     .current-weather {
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
-        border-bottom: solid 1px black;
         padding: 10px 0;
-        font-weight: 600;
-
-        div {
-            padding-left: 20px;
+        border-bottom: solid 1px black;
+        
+        >p {
+            font-weight: 600;
+            text-decoration: underline;
+        }
+        >div {
+            // padding-left: 20px;
             display: flex;
-            font-weight: 300;
+            // font-weight: 300;
             align-items: center;
             flex-direction: column;
-            justify-content: center;
+            // justify-content: center;
             
-            img {
-                height: 40px;
-            }
+        }
+        img {
+            height: 40px;
         }
     }
 }
 .todays-weather {
-    // border: solid;
     width: 50%;
-    // border: solid;
     margin: 0 auto;
     display: flex;
-    justify-content: space-between;
-    background-color: rgba(360, 360, 360, .7);
+    flex-direction: column;
+    background-color: $primary-background;
     border-radius: 10px;
     padding: 5px;
+    
 
     p {
         padding: 5px 0;
     }
 }
 
+.weather-data {
+    display: flex;
+    justify-content: space-between;
+}
+
 .weather-icon {
-    background-color: rgba(360, 360, 360, .8);
+    background-color: $primary-background;
     border-radius: 10px;
     padding: 10px;
     margin: 0 10px;
@@ -210,7 +218,8 @@
     }
 
     .planner-holder {
-        background-color: rgba(360, 360, 360, .8);
+        border-radius: 10px;
+        background-color: $primary-background;
         height: 100%;
         display: flex;
         flex-direction: column;
@@ -220,7 +229,6 @@
         a {
             align-self: center;
             width: fit-content;
-            color: black;
         }
 
         h3 {

@@ -31,7 +31,6 @@ const Planner = () => {
             <div className='planner'>
                 <div className='planner-buttons'>
                     <button id='schedule' onClick={handleActive}>Planner</button>
-                    <button id='calendar' onClick={handleActive}>Calendar</button>
                     <button id='notes' onClick={handleActive}>Notes</button>
                 </div>
                 <div className='planner-container'>
@@ -39,7 +38,7 @@ const Planner = () => {
                 </div>
             </div>
             <div className='planner-weather'>
-                <h2>{currentUser.location.toUpperCase()}</h2>
+                <h2 className='title-color'>{currentUser.location.toUpperCase()}</h2>
                 {Object.keys(currentUser.primary_weather).length === 0 ? null :
                     currentUser.primary_weather.daily.map(day => <WeatherIcon day={day} key={day.dt} formatUnits={formatUnits} />)}
             </div>

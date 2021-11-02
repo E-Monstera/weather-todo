@@ -88,7 +88,6 @@ function App() {
       authenticateUser()
         .then(response => { //Success, update userContext
           dispatch({ type: 'setUser', payload: { user: response.data.user } })
-
           // Now that the users basic data has been collected, grab their weather data and planner
           getToDo()
             .then(res2 => {
@@ -129,7 +128,7 @@ function App() {
     >
       <Router>
         <div className='app rainy-day'>
-          <Nav />
+          {currentUser.username === ''? null: <Nav />}
           <Routes />
         </div>
       </Router>

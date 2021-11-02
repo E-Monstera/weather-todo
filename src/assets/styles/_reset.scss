@@ -7,7 +7,9 @@ html, body, div, span, object, iframe, figure, h1, h2, h3, h4, h5, h6, p, blockq
     padding: 0;
     border: 0;
     font-size: 16px;
+    color: $primary-color;
 }
+
 
 footer, header, nav, section, main{
     display: block;
@@ -22,7 +24,7 @@ ol, ul{
 }
 
 a {
-    color: black;
+    color: $primary-color;
     text-decoration: none;
 }
 

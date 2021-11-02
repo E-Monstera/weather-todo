@@ -61,8 +61,11 @@ const Item = (props) => {
 
     //Function to update the completed status of a post
     const updateChecked = async (e) => {
+        console.log('in update checked')
+        let classes = e.target.className.split(' ')
+        console.log(classes)
         //First, grab the items data and update the completed status
-        let initIndex = currentUser.planner.items.findIndex(item => item._id === e.target.className)
+        let initIndex = currentUser.planner.items.findIndex(item => item._id === classes[0])
         let newItem = Object.assign({}, currentUser.planner.items[initIndex]);
         newItem.completed = !currentUser.planner.items[initIndex].completed;
         newItem.title = htmlDecode(currentUser.planner.items[initIndex].title);
@@ -84,10 +87,12 @@ const Item = (props) => {
     return (
         <div className='item item-container'>
             <div className='item item-title'>
-                <p className={item.priority===1 ? 'bullet high': item.priority===2 ? 'bullet med' : 'bullet low'}>&bull;</p>
-                <form className='item-checkbox'>
-                    <label htmlFor='completed'>Completed?</label>
-                    <input type='checkbox' checked={item.completed} name='completed' id='completed' className={item._id} onChange={updateChecked}></input>
+                <p className={item.priority === 1 ? 'bullet high' : item.priority === 2 ? 'bullet med' : 'bullet low'}>&bull;</p>
+                <form className='item-checkbox-form'>
+                    <label htmlFor='completed'>
+                        <input type='checkbox' checked={item.completed} name='completed' id='completed' className={`${item._id} item-checkbox`} onChange={updateChecked}></input>
+                        <span></span>
+                    </label>
                 </form>
                 <p>{htmlDecode(item.title)}</p>
             </div>
@@ -97,8 +102,8 @@ const Item = (props) => {
                 <button alt='edit item' className='item-button edit-button' onClick={handleEdit}><i className="far fa-edit" alt='edit item' id={item._id}></i></button>
                 <button alt='delete item' className='item-button delete-button' onClick={handleDelete}><i className="far fa-trash-alt" alt='delete item' id={item._id}></i></button>
             </div>
-            {modal ? <NewForm source={source} toggleModal={toggleModal}/> : null}
-            {detailModal? <Details toggleDetails={toggleDetails} handleDelete={handleDelete} handleEdit={handleEdit} item={item}/>: null}
+            {modal ? <NewForm source={source} toggleModal={toggleModal} /> : null}
+            {detailModal ? <Details toggleDetails={toggleDetails} handleDelete={handleDelete} handleEdit={handleEdit} item={item} /> : null}
         </div>
     )
 }

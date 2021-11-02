@@ -1,9 +1,11 @@
+@import 'variables';
 @import 'reset';
 @import 'modal';
 @import 'planner';
 @import 'nav';
 @import 'home';
 @import 'toggle';
+@import 'homepage';
 
 // Styling for the backgrounds
 .rainy-day {
@@ -14,4 +16,8 @@
 
 .app {
     min-height: 100vh;
+}
+
+.title-color {
+    color: $title-color;
 }

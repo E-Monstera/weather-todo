@@ -1,0 +1,35 @@
+.welcome-container {
+    height: 100vh;
+    background-color: #2b2e2b;
+}
+
+
+.welcome-header {
+    height: 400px;
+    
+    .banner {
+        background-image: url(../images/banner.jpg);
+        height: 100%;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+        .banner:after {
+            background-color: rgba(0, 0, 0, .5);
+        }
+        button {
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            // color: white;
+        }
+    }
+
+}

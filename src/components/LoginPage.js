@@ -25,12 +25,29 @@ const LoginPage = () => {
     }
 
     return (
-        <div>
-            <h1>Login Page</h1>
-            <button onClick={toggleLogin}>Login</button>
-            <button onClick={toggleSignUp}>SignUp</button>
-            {loginModal? <Login toggleLogin={toggleLogin} newUserFlag={newUserFlag}/>: null}
-            {signUpModal? <Signup toggleSignUp={toggleSignUp} toggleLogin={toggleLogin}/>: null}
+        <div className='welcome-container'>
+            <div className='welcome-header'>
+                <div className='banner'>
+                    <button onClick={toggleLogin}>Login</button>
+                    <div>
+                        <h1>The</h1>
+                        <h1>Weather</h1>
+                        <p>(or not)</p>
+                        <h1>Planner</h1>
+                    </div>
+                </div>
+            </div>
+            <div className='cta-section'>
+                <p>Are you ready for the open road?</p>
+                <p>The perfect planner for your day. Create your plans with the weather in mind and you can never go wrong!</p>
+                <button onClick={toggleSignUp}>SignUp</button>
+                <button>Try Demo Account</button>
+            </div>
+            <div className='banner-section'>
+
+            </div>
+            {loginModal ? <Login toggleLogin={toggleLogin} newUserFlag={newUserFlag} /> : null}
+            {signUpModal ? <Signup toggleSignUp={toggleSignUp} toggleLogin={toggleLogin} /> : null}
         </div>
     )
 }

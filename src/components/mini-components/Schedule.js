@@ -209,21 +209,23 @@ const Schedule = () => {
                 <button className={active.name === 'Tomorrow' ? 'active-tab' : null} id='Tomorrow' onClick={toggleActive}>Tomorrow</button>
                 <button className={active.name === 'Urgent' ? 'active-tab' : null} id='Urgent' onClick={toggleActive}>Urgent</button>
                 <h2>Projects</h2>
-                {currentUser.planner.projects ? currentUser.planner.projects.map(project => <button className={active.id === project._id ? 'active-tab' : `${project.title}`} id={project._id} onClick={toggleActive} key={project._id}>{project.title}</button>) : null}
+            {/* {console.log(currentUser)}
+                {console.log(currentUser.planner.projects)} */}
+                {currentUser.id===''? null :
+                currentUser.planner.projects.length === 0? <p>No Projects On Record</p>:null}
+                {currentUser.planner.projects && currentUser.planner.projects !== undefined? currentUser.planner.projects.map(project => <button className={active.id === project._id ? 'active-tab' : `${project.title}`} id={project._id} onClick={toggleActive} key={project._id}>{project.title}</button>) : null}
                 <button onClick={toggleModal}>+</button>
             </div>
             <div className='planner-content'>
                 {active.id === 0 ? <h2>{active.name}</h2> :
                     <div>
-                        <h2>{active.name}</h2>
+                        <h2>{active.name === 'Today' || active.name==='Tomorrow'? `${active.name}'s Items'` : `${active.name} Items`}</h2>
                         <div>
                             <button alt='edit project' className='item-button edit-button' onClick={handle_edit_proj}><i id={active.id} className="far fa-edit" alt='edit project'></i></button>
                             {activeItems.length === 0 ? <button id={active.id} alt='delete project' className='item-button delete-button' onClick={handle_del_proj}><i className="far fa-trash-alt" alt='delete project'></i></button> : null}
                         </div>
                     </div>}
-                {/* {console.log('activeitems')}
-                    {console.log(activeItems)} */}
-                {console.log(currentUser)}
+                {activeItems.length === 0? <p>Add Items Below!</p>:null}
                 {activeItems ? activeItems.map(item => <Item item={item} key={item._id} />) : null}
                 <button onClick={addItem}>+</button>
             </div>

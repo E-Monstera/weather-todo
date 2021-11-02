@@ -57,6 +57,8 @@ const Home = () => {
 
     //Function to update the completed status of a post
     const updateChecked = async (e) => {
+        console.log('in update checked')
+        console.log(e.target)
         //First, grab the items data and update the completed status
         let initIndex = currentUser.planner.items.findIndex(item => item._id === e.target.className)
         let newItem = Object.assign({}, currentUser.planner.items[initIndex]);
@@ -82,9 +84,11 @@ const Home = () => {
         return (
             <div className='home-item' key={item._id}>
                 <p className={item.priority === 1 ? 'bullet high' : item.priority === 2 ? 'bullet med' : 'bullet low'}>&bull;</p>
-                <form className='item-checkbox'>
-                    <label htmlFor='completed'>Completed?</label>
-                    <input type='checkbox' checked={item.completed} name='completed' id='completed' className={item._id} onChange={updateChecked}></input>
+                <form className='item-checkbox-form'>
+                    <label htmlFor='completed'>
+                        <input type='checkbox' checked={item.completed} name='completed' id='completed' className={`${item._id} item-checkbox`} onChange={updateChecked}></input>
+                        <span></span>
+                    </label>
                 </form>
                 <h5>{htmlDecode(item.title)}</h5>
             </div>
@@ -174,28 +178,22 @@ const Home = () => {
     return (
         <div className='home'>
             <div className='home-weather-wrapper'>
-                {currentUser.location === '' ? <h3>No Location on File</h3> :
-                    <h2>{currentUser.location[0].toUpperCase()}{currentUser.location.slice(1)}</h2>}
+                {currentUser.location === '' ? <h2 className='title-color'>No Location on File</h2> :
+                    !isNaN(currentUser.location) ? <h2 className='title-color'>Zipcode: {currentUser.location}</h2> :
+                        <h2 className='title-color'>{currentUser.location[0].toUpperCase()}{currentUser.location.slice(1)}</h2>}
                 <div className='weather-form'>
                     <form onSubmit={handleSubmit}>
                         <label htmlFor='location'>Search New Location: </label>
                         <input type='text' id='location' name='location' placeholder='Search New City/Zipcode' required initialvalue={location} value={location} onChange={handleChange}></input>
                     </form>
-                    <div className='switch-wrapper'>
-                        <p>Units:</p>
-                        <label className="switch" onChange={handleUnits}>
-                            <input type="checkbox" />
-                            <span className="slider round"></span>
-                        </label>
-                        <p>{currentUser.units === 'imperial' ? 'Imperial' : 'Metric'}</p>
-                    </div>
-                </div>
 
-                {loading ? <h3>Loading...</h3> : <Weather />}
+                </div>
+                {currentUser.location === '' ? <h3 className='title-color'>Please Enter Location Above</h3> : loading ?
+                    <h3 className='title-color'>Loading...</h3> : < Weather />}
 
             </div>
             <div className='home-planner-wrapper'>
-                <h2>Planner</h2>
+                <h2 className='title-color'>Planner</h2>
                 <div className='home-planner-container'>
                     <div className='planner-holder'>
                         <Link to='/planner'>To Planner →</Link>

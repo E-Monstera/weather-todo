@@ -8,7 +8,7 @@ const formatUnits = (unit, value) => {
     return `${Math.round((value*1.8) + 32)}°F`
   } else {
     // Units are metric
-    return `${value}°C`
+    return `${Math.round(value)}°C`
   }
 }
 

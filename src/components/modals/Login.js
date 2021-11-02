@@ -25,6 +25,11 @@ const Login = (props) => {
         }))
     }
 
+    const loginDemo = () => {
+        // email:demo@demo.com
+        // password: Testing123!
+    }
+
     //Function to handle submitting data to the backend
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -35,7 +40,9 @@ const Login = (props) => {
             // Now that the users basic data has been collected, grab their weather data and planner
             getToDo()
                 .then(res2 => {
-                    if (res.user.location === '') {
+                    console.log('in login.js')
+                    console.log(res.user.location)
+                    if (res.user.location === undefined) {
                         //A location has not yet been set by the user
                         userContext.userDispatch({ type: 'updatePlanner', payload: { planner: res2.data } })
                     } else {

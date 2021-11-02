@@ -26,6 +26,9 @@
     button {
         height: 40px;
         width: 200px;
+        border: none;
+        background-color: $primary-background;
+        color: $planner-color;
     }
 }
 
@@ -59,7 +62,7 @@
     width: 100%;
     height: 100%;
     border-radius: 10px;
-    background-color: rgba(360, 360, 360, 0.8);
+    background-color: $primary-background;
 }
 
 .schedule-wrapper {
@@ -68,15 +71,28 @@
     height: 100%;
 }
 
-.item-checkbox label {
-    position:absolute;
-    left:-10000px;
-    top:auto;
-    width:1px;
-    height:1px;
-    overflow:hidden;
+.item-checkbox-form label input {
+    display: none;
 }
 
+.item-checkbox-form span {
+    height:15px;
+    width: 15px;
+    border-radius: 50%;
+    background-color: white;
+    border: 1px solid grey;
+    display: inline-block;
+    position: relative;
+    margin-right: 10px;
+}
+
+.item-checkbox-form [type=checkbox]:checked + span:before {
+    content: '\2714';
+    position: absolute;
+    top: -2px;
+    font-size: 1.2rem;
+    left: 0;
+  }
 
 .item {
     display: flex;
@@ -200,3 +216,4 @@
     margin: 5px;
     padding: 5px;
 }
+
