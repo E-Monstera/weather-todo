@@ -30,8 +30,8 @@ const Planner = () => {
         <div className='planner-wrapper'>
             <div className='planner'>
                 <div className='planner-buttons'>
-                    <button id='schedule' onClick={handleActive}>Planner</button>
-                    <button id='notes' onClick={handleActive}>Notes</button>
+                    <button id='schedule' className={active==='schedule'? 'active-planner-button' : null} onClick={handleActive}>Planner</button>
+                    <button id='notes' className={active==='notes'? 'active-planner-button' : null} onClick={handleActive}>Notes</button>
                 </div>
                 <div className='planner-container'>
                     {active === 'schedule' ? <Schedule /> : active === 'calendar' ? <Calendar /> : <Notes />}

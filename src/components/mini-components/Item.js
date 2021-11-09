@@ -87,7 +87,8 @@ const Item = (props) => {
     return (
         <div className='item item-container'>
             <div className='item item-title'>
-                <p className={item.priority === 1 ? 'bullet high' : item.priority === 2 ? 'bullet med' : 'bullet low'}>&bull;</p>
+            <i className={item.priority === 1? "fas fa-exclamation-triangle" : item.priority ===2 ? "fas fa-exclamation-circle" : "fas fa-dot-circle"}></i>
+                {/* <p className={item.priority === 1 ? 'bullet high' : item.priority === 2 ? 'bullet med' : 'bullet low'}>&bull;</p> */}
                 <form className='item-checkbox-form'>
                     <label htmlFor='completed'>
                         <input type='checkbox' checked={item.completed} name='completed' id='completed' className={`${item._id} item-checkbox`} onChange={updateChecked}></input>

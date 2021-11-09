@@ -31,15 +31,21 @@ const Schedule = () => {
 
     //Function to toggle which tab is active (out of the projects and other groups such as 'today')
     const toggleActive = (e) => {
+        console.log(e.target.className)
         //Button was one of the hard-programmed buttons
         if (e.target.id === 'Today' || e.target.id === 'Tomorrow' || e.target.id === 'This Week' || e.target.id === 'All' || e.target.id === 'Urgent') {
             setActive({
                 name: e.target.id,      //holds the name of the button
                 id: 0                   //id is set to 0 for ease of filtering by project
             })
-        } else {
+        } else if (e.target.className.split(' ')[0] === 'active-tab') {
+            return;
+            //The user double clicked the active project, return since tab is already active
+        }
+        else {
+            let name = e.target.className.replace(' project-tab', '')
             setActive({
-                name: e.target.className,   //Holds the name of the project
+                name: name,   //Holds the name of the project
                 id: e.target.id             //Holds the id of the project
             })
         }
@@ -204,30 +210,28 @@ const Schedule = () => {
         <div className='schedule-wrapper'>
             <div className='planner-sidebar'>
 
-                <button className={active.name === 'All' ? 'active-tab' : null} id='All' onClick={toggleActive}>All</button>
-                <button className={active.name === 'Today' ? 'active-tab' : null} id='Today' onClick={toggleActive}>Today</button>
-                <button className={active.name === 'Tomorrow' ? 'active-tab' : null} id='Tomorrow' onClick={toggleActive}>Tomorrow</button>
-                <button className={active.name === 'Urgent' ? 'active-tab' : null} id='Urgent' onClick={toggleActive}>Urgent</button>
+                <button className={active.name === 'All' ? 'active-tab' : null} id='All' onClick={toggleActive}>{active.name === 'All' ? '// ' : null }All</button>
+                <button className={active.name === 'Today' ? 'active-tab' : null} id='Today' onClick={toggleActive}>{active.name === 'Today' ? '// ' : null }Today</button>
+                <button className={active.name === 'Tomorrow' ? 'active-tab' : null} id='Tomorrow' onClick={toggleActive}>{active.name === 'Tomorrow' ? '// ' : null }Tomorrow</button>
+                <button className={active.name === 'Urgent' ? 'active-tab' : null} id='Urgent' onClick={toggleActive}>{active.name === 'Urgent' ? '// ' : null }Urgent</button>
                 <h2>Projects</h2>
-            {/* {console.log(currentUser)}
-                {console.log(currentUser.planner.projects)} */}
                 {currentUser.id===''? null :
-                currentUser.planner.projects.length === 0? <p>No Projects On Record</p>:null}
-                {currentUser.planner.projects && currentUser.planner.projects !== undefined? currentUser.planner.projects.map(project => <button className={active.id === project._id ? 'active-tab' : `${project.title}`} id={project._id} onClick={toggleActive} key={project._id}>{project.title}</button>) : null}
-                <button onClick={toggleModal}>+</button>
+                currentUser.planner.projects !== undefined && currentUser.planner.projects.length === 0? <p>No Projects On Record</p>:null}
+                {currentUser.planner.projects && currentUser.planner.projects !== undefined? currentUser.planner.projects.map(project => <button className={active.id === project._id ? 'active-tab project-tab' : `${project.title} project-tab`} id={project._id} onClick={toggleActive} key={project._id}>{active.id === project._id ? '// ': null}{project.title}</button>) : null}
+                <button className='new-item-button' onClick={toggleModal}>+</button>
             </div>
             <div className='planner-content'>
-                {active.id === 0 ? <h2>{active.name}</h2> :
-                    <div>
+                {active.id === 0 ? <h2>{active.name} Items</h2> :
+                    <div className='project-title-container'>
                         <h2>{active.name === 'Today' || active.name==='Tomorrow'? `${active.name}'s Items'` : `${active.name} Items`}</h2>
                         <div>
                             <button alt='edit project' className='item-button edit-button' onClick={handle_edit_proj}><i id={active.id} className="far fa-edit" alt='edit project'></i></button>
                             {activeItems.length === 0 ? <button id={active.id} alt='delete project' className='item-button delete-button' onClick={handle_del_proj}><i className="far fa-trash-alt" alt='delete project'></i></button> : null}
                         </div>
                     </div>}
-                {activeItems.length === 0? <p>Add Items Below!</p>:null}
+                {activeItems.length === 0? <p id='no-item-alert'>Add Items Below!</p>:null}
                 {activeItems ? activeItems.map(item => <Item item={item} key={item._id} />) : null}
-                <button onClick={addItem}>+</button>
+                <button className='new-item-button' onClick={addItem}>+</button>
             </div>
             {modal ? <NewForm toggleModal={toggleModal} source={source} /> : null}
         </div>

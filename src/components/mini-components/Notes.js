@@ -52,11 +52,19 @@ const Notes = () => {
         }
     }
 
+    //Function to display the modal to add a new note
+    //Purpose of this function is to clear the source before opening the modal,
+    //this prevents a bug if an 'edit note' button was pressed before
+    const displayNoteModal = () => {
+        clearSource();
+        toggleModal();
+    }
+
     return (
         <div className='notes-wrapper'>
             <div className='notes-header'>
                 <h2>Notes</h2>
-                <button onClick={toggleModal}>+</button>
+                <button onClick={displayNoteModal} className='new-item-button note-button'>+</button>
             </div>
             <div className='notes-container'>
                 {console.log(currentUser)}

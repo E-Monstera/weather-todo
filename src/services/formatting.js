@@ -13,6 +13,7 @@ const formatUnits = (unit, value) => {
 }
 
 const dateFormat = (date) => {
+  
   let newDate = new Date(date * 1000);
   return (newDate.toString());
 }

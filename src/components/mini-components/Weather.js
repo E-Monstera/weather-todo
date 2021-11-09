@@ -4,6 +4,7 @@ import WeatherIcon from './WeatherIcon';
 import HourlyIcon from './HourlyIcon';
 import { formatUnits } from '../../services/formatting';
 import { updateUnits } from '../../services/user.service';
+import ListView from './ListView';
 
 const Weather = () => {
 
@@ -56,15 +57,14 @@ const Weather = () => {
 
     }
 
+    //Function and state to toggle between list and grid/icon view
+    const [view, setView] = useState(true);
+    const toggleView = () => {
+        setView(!view);
+    }
+
     return (
         <div className='weather-wrapper'>
-            <div className='switch-wrapper'>
-                <label className="switch" onChange={handleUnits}>
-                    <input type="checkbox" />
-                    <span className="slider round"></span>
-                </label>
-                <p className='title-color'>{currentUser.units === 'imperial' ? 'Imperial' : 'Metric'}</p>
-            </div>
             <div className='todays-weather'>
                 <div className='current-weather'>
                     <div>
@@ -90,15 +90,47 @@ const Weather = () => {
                 </div>
 
             </div>
+            <div className='preference-container'>
+                <h3>Preferences</h3>
+                <div className='preference-wrapper'>
+                    <div className="toggle-switch">
+                        <h4>Units</h4>
+                        <label className="checkbox toggle switch" onChange={handleUnits}>
+                            <input id="view" type="checkbox" defaultChecked={currentUser.units === 'imperial' ? false : true} />
+                            <p>
+                                <span>Metric</span>
+                                <span>Imperial</span>
+                            </p>
+                            <div className="slide-button"></div>
+                        </label>
+                    </div>
+
+                    <div className="toggle-switch">
+                        <h4>View</h4>
+                        <label className="checkbox toggle switch" onChange={toggleView}>
+                            <input id="view" type="checkbox" defaultChecked={view} />
+                            <p>
+                                <span>Icon</span>
+                                <span>List</span>
+                            </p>
+                            <div className="slide-button"></div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
             <div className='daily weather-container'>
                 <h2 className='title-color'>Daily Forecast</h2>
+                {view? 
                 <div>
                     {currentUser.primary_weather.daily.map(day => <WeatherIcon day={day} key={day.dt} />)}
-                </div>
+                </div> :
+                <ListView interval='daily' data={currentUser.primary_weather.daily}/> }
             </div>
 
             <div className='hourly weather-container'>
                 <h2 className='title-color'>Hourly Forecast</h2>
+                {view? 
                 <div className='weather-scroll'>
                     <button className='scroll-button' id='left' onMouseDown={startScroll} onMouseUp={stopScroll}>&#10094;</button>
                     <div className='hourly-container' ref={scrollRef}>
@@ -106,6 +138,7 @@ const Weather = () => {
                     </div>
                     <button className='scroll-button' id='right' onMouseDown={startScroll} onMouseUp={stopScroll}>&#10095;</button>
                 </div>
+                : <ListView interval='hourly' data={currentUser.primary_weather.hourly.slice(0, 24)}/> }
             </div>
         </div>
     )
