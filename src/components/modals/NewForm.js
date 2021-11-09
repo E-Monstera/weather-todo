@@ -12,15 +12,15 @@ const NewForm = (props) => {
     return (
         <div className='modal'>
             <div className='modal-main newForm-main'>
-                <div>
+                <div className='modal-title'>
                     <h2>Create a New...</h2>
                     <button className='x-button' onClick={props.toggleModal}>X</button>
                 </div>
                 <div className='newForm-data'>
                     <div className='newForm-aside'>
-                        <button className={active==='project'? 'active-tab': null} id='project' onClick={toggleActive}>Project</button>
-                        <button className={active==='item'? 'active-tab': null} id='item'  onClick={toggleActive}>To Do</button>
-                        <button className={active==='note'? 'active-tab': null} id='note' onClick={toggleActive}>Note</button>
+                        <button className={active==='project'? 'active-tab': null} id='project' onClick={toggleActive}>{active==='project'? '//' : null} Project</button>
+                        <button className={active==='item'? 'active-tab': null} id='item'  onClick={toggleActive}>{active==='item'? '//' : null} Item</button>
+                        <button className={active==='note'? 'active-tab': null} id='note' onClick={toggleActive}>{active==='note'? '//' : null} Note</button>
                     </div>
                     <div className='newForm-content'>
                         {console.log(props.source)}

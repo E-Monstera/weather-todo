@@ -67,6 +67,9 @@ const Weather = () => {
         <div className='weather-wrapper'>
             <div className='todays-weather'>
                 <div className='current-weather'>
+                    {currentUser.location === '' ? <h2 className='title-color'>No Location on File</h2> :
+                        !isNaN(currentUser.location) ? <h2 className='title-color'>Zipcode: {currentUser.location}</h2> :
+                            <h2 className='title-color'>{currentUser.location[0].toUpperCase()}{currentUser.location.slice(1)}</h2>}
                     <div>
                         <p>{currentUser.primary_weather.current.weather[0].description} and {formatUnits(currentUser.units, currentUser.primary_weather.current.temp)}</p>
                         <img src={`http://openweathermap.org/img/wn/${currentUser.primary_weather.current.weather[0].icon}@2x.png`} alt='weather icon'></img>
@@ -121,24 +124,24 @@ const Weather = () => {
 
             <div className='daily weather-container'>
                 <h2 className='title-color'>Daily Forecast</h2>
-                {view? 
-                <div>
-                    {currentUser.primary_weather.daily.map(day => <WeatherIcon day={day} key={day.dt} />)}
-                </div> :
-                <ListView interval='daily' data={currentUser.primary_weather.daily}/> }
+                {view ?
+                    <div>
+                        {currentUser.primary_weather.daily.map(day => <WeatherIcon day={day} key={day.dt} />)}
+                    </div> :
+                    <ListView interval='daily' data={currentUser.primary_weather.daily} />}
             </div>
 
             <div className='hourly weather-container'>
                 <h2 className='title-color'>Hourly Forecast</h2>
-                {view? 
-                <div className='weather-scroll'>
-                    <button className='scroll-button' id='left' onMouseDown={startScroll} onMouseUp={stopScroll}>&#10094;</button>
-                    <div className='hourly-container' ref={scrollRef}>
-                        {currentUser.primary_weather.hourly.map(hour => <HourlyIcon hour={hour} key={hour.dt} />)}
+                {view ?
+                    <div className='weather-scroll'>
+                        <button className='scroll-button' id='left' onMouseDown={startScroll} onMouseUp={stopScroll}>&#10094;</button>
+                        <div className='hourly-container' ref={scrollRef}>
+                            {currentUser.primary_weather.hourly.map(hour => <HourlyIcon hour={hour} key={hour.dt} />)}
+                        </div>
+                        <button className='scroll-button' id='right' onMouseDown={startScroll} onMouseUp={stopScroll}>&#10095;</button>
                     </div>
-                    <button className='scroll-button' id='right' onMouseDown={startScroll} onMouseUp={stopScroll}>&#10095;</button>
-                </div>
-                : <ListView interval='hourly' data={currentUser.primary_weather.hourly.slice(0, 24)}/> }
+                    : <ListView interval='hourly' data={currentUser.primary_weather.hourly.slice(0, 24)} />}
             </div>
         </div>
     )

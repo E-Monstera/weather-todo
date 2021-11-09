@@ -22,6 +22,7 @@
 
         input {
             border-radius: 10px;
+            text-align: center;
             border: none;
             font-size: 1.1rem;
             padding-left: 10px;
@@ -46,7 +47,7 @@
 
 // Styling for the weather component
 .weather-wrapper {
-    width: 100%;
+    width: 1400px;
 
     .current-weather {
         display: flex;
@@ -229,6 +230,14 @@
         a {
             align-self: center;
             width: fit-content;
+            background-color: $tertiary-background;
+            padding: 10px;
+            border: 3px solid $highlight;
+            border-radius: 5px;
+        }
+
+        a:hover {
+            transform: scale(1.1);
         }
 
         h3 {
@@ -257,6 +266,7 @@
     margin: 0 auto;
     margin-top: 10px;
     border-radius: 10px;
+    padding: 15px;
 
     h3 {
         text-align: center;
@@ -270,6 +280,7 @@
 }
 
 .toggle-switch {
+    margin: 0 30px;
     h4 {
         text-align: center;
         padding: 10px 0;

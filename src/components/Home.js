@@ -178,18 +178,15 @@ const Home = () => {
     return (
         <div className='home'>
             <div className='home-weather-wrapper'>
-                {currentUser.location === '' ? <h2 className='title-color'>No Location on File</h2> :
-                    !isNaN(currentUser.location) ? <h2 className='title-color'>Zipcode: {currentUser.location}</h2> :
-                        <h2 className='title-color'>{currentUser.location[0].toUpperCase()}{currentUser.location.slice(1)}</h2>}
-                <div className='weather-form'>
-                    <form onSubmit={handleSubmit}>
-                        <label htmlFor='location'>Search New Location: </label>
-                        <input type='text' id='location' name='location' placeholder='Search New City/Zipcode' required initialvalue={location} value={location} onChange={handleChange}></input>
-                    </form>
+                    <div className='weather-form'>
+                        <form onSubmit={handleSubmit}>
+                            <label htmlFor='location'>Search New Location: </label>
+                            <input type='text' id='location' name='location' placeholder='Search New City/Zipcode' required initialvalue={location} value={location} onChange={handleChange}></input>
+                        </form>
+                    </div>
+                    {currentUser.location === '' ? <h3 className='title-color'>Please Enter Location Above</h3> : loading ?
+                        <h3 className='title-color'>Loading...</h3> : < Weather />}
 
-                </div>
-                {currentUser.location === '' ? <h3 className='title-color'>Please Enter Location Above</h3> : loading ?
-                    <h3 className='title-color'>Loading...</h3> : < Weather />}
 
             </div>
             <div className='home-planner-wrapper'>

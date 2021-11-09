@@ -67,12 +67,15 @@ const NewNote = (props) => {
 
     return (
         <form onSubmit={handleSubmit} >
-            <label htmlFor='title'>Add Title:</label>
-            <input type='text' id='title' name='title' required initialvalue={htmlDecode(newNote.title)} value={htmlDecode(newNote.title)} onChange={handleChange} ></input>
-
-            <label htmlFor='content'>Add New Note:</label>
-            <textarea id='content' name='content' required initialvalue={htmlDecode(newNote.content)} value={htmlDecode(newNote.content)} onChange={handleChange} ></textarea>
-            <button type='submit'>{typeof props.source.data ==='object'? 'Edit Note' : 'Add New Note'}</button>
+            <div className='form-element'>
+                <label htmlFor='title'>Add Title:</label>
+                <input type='text' id='title' name='title' required initialvalue={htmlDecode(newNote.title)} value={htmlDecode(newNote.title)} onChange={handleChange} ></input>
+            </div>
+            <div className='form-element new-note-textarea'>
+                <label htmlFor='content'>Add New Note:</label>
+                <textarea id='content' name='content' required initialvalue={htmlDecode(newNote.content)} value={htmlDecode(newNote.content)} onChange={handleChange} ></textarea>
+            </div>
+                <button type='submit'>{typeof props.source.data === 'object' ? 'Edit Note' : 'Add New Note'}</button>
         </form>
     )
 }

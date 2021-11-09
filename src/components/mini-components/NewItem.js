@@ -45,7 +45,7 @@ const NewItem = (props) => {
                 })
                 resultingItem.project = currentUser.planner.projects[index];
             }
-            
+
             planner.items.push(resultingItem);       //Update the general list of items
             userContext.userDispatch({ type: 'updatePlanner', payload: { planner } })
         }
@@ -92,29 +92,34 @@ const NewItem = (props) => {
     return (
         <form onSubmit={handleSubmit} >
 
-            <label htmlFor='title'>Title:</label>
-            <input type='text' id='title' name='title' required initialvalue={htmlDecode(item.title)} value={htmlDecode(item.title)} onChange={handleChange} ></input>
+            <div className='form-element'>
+                <label htmlFor='title'>Title:</label>
+                <input type='text' id='title' name='title' required initialvalue={htmlDecode(item.title)} value={htmlDecode(item.title)} onChange={handleChange} ></input>
+            </div>
+            <div className='form-element'>
+                <label htmlFor='desc'>Description:</label>
+                <textarea id='desc' name='desc' initialvalue={htmlDecode(item.desc)} value={htmlDecode(item.desc)} onChange={handleChange} ></textarea>
+            </div>
+            <div className='form-element'>
+                <label htmlFor='priority'>Priority:</label>
+                <select id='priority' name='priority' defaultValue={typeof props.source.data === 'object' ? props.source.data.priority : ''} onChange={handleChange}>
+                    <option id='1' name='1' value='1'>High</option>
+                    <option id='2' name='2' value='2' >Medium</option>
+                    <option id='3' name='3' value='3'>Low</option>
+                </select>
+            </div>
 
-            <label htmlFor='desc'>Description:</label>
-            <textarea id='desc' name='desc' initialvalue={htmlDecode(item.desc)} value={htmlDecode(item.desc)} onChange={handleChange} ></textarea>
-
-            <label htmlFor='priority'>Priority:</label>
-            <select id='priority' name='priority' defaultValue={typeof props.source.data === 'object' ? props.source.data.priority : ''} onChange={handleChange}>
-                <option id='1' name='1' value='1'>High</option>
-                <option id='2' name='2' value='2' >Medium</option>
-                <option id='3' name='3' value='3'>Low</option>
-            </select>
-
-
-
-            <label htmlFor='project'>Project:</label>
-            <select id='project' name='project' defaultValue={props.source.data === undefined ? 'none' : props.source.data.project === null? 'none' : props.source.data.project._id} onChange={handleChange}>
-                <option value='none'>No Project</option>
-                {currentUser.planner.projects.map(project => <option id={project._id} name={project._id} value={project._id} key={project._id}>{htmlDecode(project.title)}</option>)}
-            </select>
-
-            <label htmlFor='due_date'>Due By Date:</label>
-            <input type='date' id='due_date' name='due_date' defaultValue={item.due_date.toString().substr(0, 10)} required onChange={handleChange}></input>
+            <div className='form-element'>
+                <label htmlFor='project'>Project:</label>
+                <select id='project' name='project' defaultValue={props.source.data === undefined ? 'none' : props.source.data.project === null ? 'none' : props.source.data.project._id} onChange={handleChange}>
+                    <option value='none'>No Project</option>
+                    {currentUser.planner.projects.map(project => <option id={project._id} name={project._id} value={project._id} key={project._id}>{htmlDecode(project.title)}</option>)}
+                </select>
+            </div>
+            <div className='form-element'>
+                <label htmlFor='due_date'>Due By Date:</label>
+                <input type='date' id='due_date' name='due_date' defaultValue={item.due_date.toString().substr(0, 10)} required onChange={handleChange}></input>
+            </div>
             <button type='submit'>{typeof props.source.data === 'object' ? 'Edit Item' : 'Add New Item'}</button>
         </form>
     )

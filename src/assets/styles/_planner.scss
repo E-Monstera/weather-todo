@@ -8,7 +8,7 @@
 
 .planner {
     width: 70%;
-    height: 600px;
+    height: 700px;
     display: flex;
     flex-direction: column;
 
@@ -31,6 +31,7 @@
         color: black;
         font-size: 1.3rem;
         font-weight: 600;
+        border-radius: 10px 10px 0 0;
     }
 }
 
@@ -49,7 +50,11 @@
         text-align: left;
         background-color: rgba(0,0,0,0);
         font-size: 1.4rem;
-        padding: 5px 0;
+        padding: 5px 0 5px 5px;
+    }
+
+    button:hover {
+        box-shadow: 3px 2px 3px 1px rgb(202, 194, 194);
     }
 
     h2 {
@@ -61,6 +66,7 @@
         height: 50px;
         width: 50px;
         border-radius: 50%;
+        margin-top: 10px;
         border: none;
         background-color: $tertiary-background;
         font-size: 1.3rem;
@@ -68,6 +74,12 @@
         text-align: center;
         align-self: flex-end;
         margin-right: 40px;
+        padding: 0;
+    }
+
+    .new-item-button:hover {
+        box-shadow: 3px 2px 3px 1px rgb(138, 132, 132);
+        transform: scale(1.1);
     }
 }
 
@@ -189,48 +201,11 @@
 
 
 
-// Styling for the NewForm component
-.newForm-main {
-    width: 600px;
-    height: 350px;
-
-    .newForm-data {
-        display: grid;
-        grid-template-columns: 1fr 3fr;
-        height: 100%;
-    }
-}
-
-// .newForm-data {
-//     display: flex;;
-// }
-
-.newForm-aside {
-    display: flex;
-    flex-direction: column;
-
-    button {
-        width: 100%;
-        font-size: 1.3rem;
-    }
-}
-
-.newForm-content {
-    form {
-        width: 90%;
-        height: 100%;
-        margin: 0 auto;
-    }
-
-    textarea {
-        // height: 100%;
-    }
-}
 
 .planner-weather {
-    height: 600px;
+    height: 700px;
     overflow: auto;
-    width: 180px;
+    width: 210px;
     margin-left: 50px;
     padding-top: 10px;
     background-color: $secondary-background;
@@ -340,6 +315,11 @@
     font-weight: 600;
     text-align: center;
     align-self: flex-end;
+}
+
+.new-item-button:hover {
+    box-shadow: 3px 2px 3px 1px rgb(138, 132, 132);
+    transform: scale(1.1);
 }
 
 .note-button {

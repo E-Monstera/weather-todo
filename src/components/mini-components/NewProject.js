@@ -20,9 +20,9 @@ const NewProject = (props) => {
     //First, checks if the project in question is one that is being editted or not
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
+
         let planner = currentUser.planner;
-        if(props.source.data === undefined) {
+        if (props.source.data === undefined) {
             //The project is a new project
             let res = await post_project(project);
             //Now, add the project to currentUser.planner. This ensures a live update to the users planner
@@ -51,9 +51,11 @@ const NewProject = (props) => {
 
     return (
         <form onSubmit={handleSubmit} >
-            <label htmlFor='newProject'>{props.source.data===undefined? 'Add New Project': 'Edit Project'}</label>
-            <input type='text' id='newProject' name='newProject' initialvalue={project} value={project} onChange={handleChange} ></input>
-            <button type='submit'>{props.source.data===undefined? 'Add New Project': 'Edit Project'}</button>
+            <div className='form-element'>
+                <label htmlFor='newProject'>{props.source.data === undefined ? 'Add New Project' : 'Edit Project'}</label>
+                <input type='text' id='newProject' name='newProject' initialvalue={project} value={project} onChange={handleChange} ></input>
+            </div>
+            <button type='submit'>{props.source.data === undefined ? 'Add New Project' : 'Edit Project'}</button>
         </form>
     )
 }

@@ -13,15 +13,15 @@
 
 .modal-main {
     position:fixed;
-    background-color: #242526;
+    background-color: $tertiary-background;
     width: 430px;
     display: flex;
     flex-direction: column;
     border-radius: 8px;
     padding-top: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, .1), 0 8px 16px rgba(0, 0, 0, .1);
-    height: 300px;
     color: white;
+    // height: 600px;
 }
 
 .modal-main {
@@ -30,12 +30,24 @@
     display: flex;
     flex-direction: column;
     height: 100%;
-    padding: 10px 0;
-    justify-content: space-around;
+    padding: 10px 5px;
+    // justify-content: space-around;
 
-        input {
-            background: rgb(88, 87, 87);
+        input, textarea, select {
             border: none;
+            border-radius: 5px;
+            background-color: $primary-background;
+        }
+
+
+
+        button {
+            border: none;
+            width: 200px;
+            border-radius: 10px;
+            height: 30px;
+            margin: 10px auto 0 auto;
+            background-color: $primary-background;
         }
     }
 
@@ -43,6 +55,10 @@
         text-align: center;
         font-size: 1.5rem;
     }
+}
+
+.new-note-textarea textarea{
+    min-height: 200px;
 }
 
 .error {
@@ -62,12 +78,18 @@
 .form-element {
     display: flex;
     flex-direction: column;
-    padding: 10px;
+    padding-bottom: 10px;
+
+    label {
+        padding-bottom: 5px;
+    }
 
     .error {
         text-align: left;
     }
 }
+
+
 
 .x-button {
     width: 40px;
@@ -75,7 +97,7 @@
     font-size: 1.5rem;
     font-weight: 600;
     border-radius: 10px;
-    background-color: rgba(0, 0, 0, .5);
+    background-color: rgba(0, 0, 0, .8);
     color: white;
     border: none;
     align-self: flex-end;
@@ -85,11 +107,69 @@
 .submit-button {
     width: 50%;
     margin: 0 auto;
-    background-color: rgba(0, 0, 0, .5);
-    color: white;
+    background-color: $primary-background;
+    // color: white;
     border: none;
     border-radius: 10px;
     font-size: 1.2rem;
-    font-weight: 600;
+    // font-weight: 600;
 }
 
+//Styling for NewForm
+.modal-title {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    align-items: center;
+    padding-bottom: 10px;
+    .x-button {
+        position: absolute;
+        right: -8px;
+        top: -8px;
+    }
+}
+
+.newForm-aside {
+    padding-top: 50px;
+
+    button {
+        width: 200px;
+        border: none;
+        text-align: left;
+        background-color: rgba(0, 0, 0, 0);
+        font-size: 1.4rem;
+        padding: 5px 0 5px 5px;
+    }
+}
+
+// Styling for the NewForm component
+.newForm-main {
+    width: 600px;
+    min-height: 400px;
+
+    .newForm-data {
+        display: grid;
+        grid-template-columns: 1fr 3fr;
+        height: 100%;
+    }
+}
+
+
+.newForm-aside {
+    display: flex;
+    flex-direction: column;
+
+    button {
+        width: 100%;
+        font-size: 1.3rem;
+    }
+}
+
+.newForm-content {
+    form {
+        width: 90%;
+        height: 100%;
+        margin: 0 auto;
+    }
+
+}
