@@ -204,10 +204,17 @@ const Schedule = () => {
         toggleModal();
     }
 
-
+    const [dropdown, setDropdown] = useState(false);
+    const toggleDropdown = () => {
+        setDropdown(!dropdown);
+    }
 
     return (
         <div className='schedule-wrapper'>
+            <div className='planner-dropdown'>
+                <h4>Select Project</h4>
+                <button className='toggle-button' onClick={toggleDropdown}>≡</button>
+            </div>
             <div className='planner-sidebar'>
 
                 <button className={active.name === 'All' ? 'active-tab' : null} id='All' onClick={toggleActive}>{active.name === 'All' ? '// ' : null }All</button>
@@ -229,7 +236,7 @@ const Schedule = () => {
                             {activeItems.length === 0 ? <button id={active.id} alt='delete project' className='item-button delete-button' onClick={handle_del_proj}><i className="far fa-trash-alt" alt='delete project'></i></button> : null}
                         </div>
                     </div>}
-                {activeItems.length === 0? <p id='no-item-alert'>Add Items Below!</p>:null}
+                {activeItems.length === 0? <div id='no-item'><p id='no-item-alert'>Add Some Items! </p> <i class="fas fa-arrow-right"></i></div>:null}
                 {activeItems ? activeItems.map(item => <Item item={item} key={item._id} />) : null}
                 <button className='new-item-button' onClick={addItem}>+</button>
             </div>

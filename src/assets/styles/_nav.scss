@@ -40,38 +40,83 @@ nav {
         background-color: rgba(0,0,0,0);
     }
 
-    .nav-dropdown {
-        position: absolute;
-        top: 40px;
-        right: 10px;
-        width: 150px;
-        background-color: white;
+    .toggle-button:hover {
+        transform: scale(1.2);
+        cursor: pointer;
+    }
+
+}
+.nav-dropdown {
+    position: absolute;
+    top: 40px;
+    right: 10px;
+    width: 150px;
+    background-color: white;
+    border-radius: 5px;
+    
+    a, button {
         border-radius: 5px;
-        
-        a, button {
-            border-radius: 5px;
-            display: block;
-            color: black;
-            background-color: white;
-            width: 100%;
-            text-align: left;
-            font-size: 1rem;
-            border: none;
-            height: 30px;
-            padding: 0 0 0 10px;
-            margin: 0;
-        }
-
-        a {
-            padding-top: 10px;
-        }
-
-        a:hover, button:hover {
-            background-color: rgba(0,0,0,.2);
-        }
-        
+        display: block;
+        color: black;
+        background-color: white;
+        width: 100%;
+        text-align: left;
+        font-size: 1rem;
+        border: none;
+        height: 30px;
+        padding: 0 0 0 10px;
+        margin: 0;
     }
 
 
+    a {
+        padding-top: 10px;
+    }
+
+    a:hover, button:hover {
+        background-color: rgba(0,0,0,.2);
+    }   
 }
 
+@media (max-width:900px) {
+    nav .title {
+        padding-left: 50px;
+    }
+}
+
+@media (max-width:700px) {
+    nav .title a{
+        font-size: 3rem;
+    }
+
+    nav .title-accent p {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width:470px) {
+    nav .title {
+        padding-left: 10px;
+
+        a{
+            font-size: 2.5rem;
+        }
+    }
+
+    nav .title-accent p {
+        font-size: .9rem;
+    }
+}
+
+@media (max-width:370px) {
+    nav .title {
+        a{
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+    }
+
+    nav .title-accent p {
+        font-size: .9rem;
+    }
+}

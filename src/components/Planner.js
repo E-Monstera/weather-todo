@@ -30,8 +30,8 @@ const Planner = () => {
         <div className='planner-wrapper'>
             <div className='planner'>
                 <div className='planner-buttons'>
-                    <button id='schedule' className={active==='schedule'? 'active-planner-button' : null} onClick={handleActive}>Planner</button>
-                    <button id='notes' className={active==='notes'? 'active-planner-button' : null} onClick={handleActive}>Notes</button>
+                    <button id='schedule' className={active === 'schedule' ? 'active-planner-button' : null} onClick={handleActive}>Planner</button>
+                    <button id='notes' className={active === 'notes' ? 'active-planner-button' : null} onClick={handleActive}>Notes</button>
                 </div>
                 <div className='planner-container'>
                     {active === 'schedule' ? <Schedule /> : active === 'calendar' ? <Calendar /> : <Notes />}
@@ -39,8 +39,10 @@ const Planner = () => {
             </div>
             <div className='planner-weather'>
                 <h2 className='title-color'>{currentUser.location.toUpperCase()}</h2>
-                {Object.keys(currentUser.primary_weather).length === 0 ? null :
-                    currentUser.primary_weather.daily.map(day => <WeatherIcon day={day} key={day.dt} formatUnits={formatUnits} />)}
+                <div>
+                    {Object.keys(currentUser.primary_weather).length === 0 ? null :
+                        currentUser.primary_weather.daily.map(day => <WeatherIcon day={day} key={day.dt} formatUnits={formatUnits} />)}
+                </div>
             </div>
         </div>
     )

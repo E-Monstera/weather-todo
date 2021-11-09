@@ -1,7 +1,7 @@
 .home {
     display: grid;
-    grid-template-columns: 3fr minmax(300px, 500px);
-    // margin: 0 50px;
+    // grid-template-columns: 3fr minmax(300px, 500px);
+    grid-template-columns: minmax(600px, 3fr) 350px;
     gap: 50px;
     margin: 0 50px;
     min-height: 80vh;
@@ -47,7 +47,7 @@
 
 // Styling for the weather component
 .weather-wrapper {
-    width: 1400px;
+    // width: 1400px;
 
     .current-weather {
         display: flex;
