@@ -31,7 +31,7 @@ const Schedule = () => {
 
     //Function to toggle which tab is active (out of the projects and other groups such as 'today')
     const toggleActive = (e) => {
-        console.log(e.target.className)
+        setDropdown(false);     //Closes the project dropdown in responsive mode
         //Button was one of the hard-programmed buttons
         if (e.target.id === 'Today' || e.target.id === 'Tomorrow' || e.target.id === 'This Week' || e.target.id === 'All' || e.target.id === 'Urgent') {
             setActive({
@@ -215,7 +215,7 @@ const Schedule = () => {
                 <h4>Select Project</h4>
                 <button className='toggle-button' onClick={toggleDropdown}>≡</button>
             </div>
-            <div className='planner-sidebar'>
+            <div className={dropdown? 'planner-sidebar active-sidebar': 'planner-sidebar'}>
 
                 <button className={active.name === 'All' ? 'active-tab' : null} id='All' onClick={toggleActive}>{active.name === 'All' ? '// ' : null }All</button>
                 <button className={active.name === 'Today' ? 'active-tab' : null} id='Today' onClick={toggleActive}>{active.name === 'Today' ? '// ' : null }Today</button>
