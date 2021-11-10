@@ -48,6 +48,8 @@
 // Styling for the weather component
 .weather-wrapper {
     // width: 1400px;
+    width: 100%;
+    min-width: 800px;
 
     .current-weather {
         display: flex;
@@ -77,6 +79,7 @@
 }
 .todays-weather {
     width: 50%;
+    min-width: 550px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -143,31 +146,14 @@
         margin: 0 auto;
     }
     
-    .weather-icon {
+}
 
+.daily {
+    overflow-x: auto;
+}
 
-
-        // >div {
-        //     display: flex; 
-        //     justify-content: center;
-        //     align-items: center;
-
-        //     >div {
-        //         display: flex;
-        //         flex-direction: column;
-        //         justify-content: space-between;
-        //         height: 70%;
-        //     }
-        // }
-
-        // p {
-        //     font-size: .8rem;
-        // }
-
-        // .prec {
-        //     padding-top: 5px;
-        // }
-    }
+.weather-scroll {
+    width: 100%;
 }
 
 .scroll-button {
@@ -184,19 +170,14 @@
 
 .hourly {
     padding-top: 40px;
-    
+    margin-bottom: 20px;
+    width: 100%;
 
-    .weather-scroll {
-        > div {
-            // display: flex;
-            // overflow-x: scroll;
-            // width: 80vw;
-        }
-    }
     .hourly-container {
         vertical-align: middle;
         display: flex;
-        width: 70vw;
+        // width: 65vw;
+        // min-width: 500px;
         white-space: nowrap;
         overflow-x: hidden;
         overflow-y: hidden;
@@ -263,8 +244,8 @@
     flex-direction: column;
     background-color: $primary-background;
     width: 50%;
-    margin: 0 auto;
-    margin-top: 10px;
+    min-width: 550px;
+    margin: 10px auto;
     border-radius: 10px;
     padding: 15px;
 
@@ -272,6 +253,10 @@
         text-align: center;
         font-size: 1.5rem;
     }
+}
+
+.preference-dropdown {
+    display: none;
 }
 
 .preference-wrapper {
@@ -312,4 +297,149 @@
 .weather-list {
     display: flex;
     align-items: center;
+}
+
+@media (max-width: 1500px) {
+    .hourly {
+        padding-top: 40px;
+        
+        .hourly-container {
+            overflow-x: auto;
+        }
+    }
+}
+@media (max-width: 1200px) {
+    .home {
+        display: flex;
+        flex-direction: column;
+    }
+    .planner-holder {
+        margin-bottom: 20px;
+    }
+}
+
+@media (max-width: 800px) {
+    table, td, tr, th {
+        font-size: 12px;
+    }
+    .home {
+        margin: 0 10px;
+    }
+    .weather-wrapper {
+        min-width: 550px;
+    }
+
+    .todays-weather, .preference-container {
+        min-width: 400px;
+        width: 90%;
+    }
+
+    .daily-weather-container {
+        overflow: scroll;
+    }
+    .list-container {
+        width: 100%;
+        min-width: 450px;
+
+
+        table {
+            overflow: scroll;
+            min-width: 550px;
+        }
+    }
+
+    #left, #right {
+        display: none;
+    }
+}
+
+@media (max-width: 640px) {
+    .todays-weather, .preference-container {
+        width: 98%;
+    }
+
+    .todays-weather p{
+        font-size: .8rem;
+    }
+
+    .todays-weather h2 {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 530px) {
+    .home {
+        h2 {
+            font-size: 1.5rem;
+        }
+        h3 {
+            font-size: 1.2rem;
+        }
+    }
+    .weather-wrapper {
+        min-width: 100%;
+    }
+
+    .todays-weather, .preference-container {
+        min-width: 100%;
+    }
+
+    .preference-wrapper {
+        display: none;
+    }
+
+    .preference-dropdown {
+        display: block;
+        background-color: rgba(0,0,0,0);
+        border: none;
+        font-size: 1.5rem;
+        font-weight: 800;
+    }
+    .preference-container {
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        padding: 5px;
+        position: relative;
+    }
+    .preference-container .preference-active {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 35px;
+        right: 0;
+        padding-bottom: 10px;
+        background-color: $tertiary-background;
+        border-radius: 10px;
+    }
+
+    .weather-icon {
+        width: 135px;
+        padding: 5px;
+    }
+}
+
+@media (max-width: 480px) {
+    .weather-data {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        justify-items: end;
+    }
+
+    .weather-times {
+        display: none;
+    }
+}
+
+@media (max-width: 400px) {
+    .weather-data {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .weather-left, .weather-right {
+        width: 180px;
+    }
 }

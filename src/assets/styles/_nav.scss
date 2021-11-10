@@ -41,7 +41,7 @@ nav {
     }
 
     .toggle-button:hover {
-        transform: scale(1.2);
+        transform:rotate(90deg);
         cursor: pointer;
     }
 
@@ -95,11 +95,14 @@ nav {
 }
 
 @media (max-width:470px) {
-    nav .title {
-        padding-left: 10px;
+    nav {
+        height: 50px;
 
-        a{
-            font-size: 2.5rem;
+        .title {
+        padding-left: 10px;
+            a{
+                font-size: 2.2rem;
+            }
         }
     }
 
@@ -108,7 +111,7 @@ nav {
     }
 }
 
-@media (max-width:370px) {
+@media (max-width:340px) {
     nav .title {
         a{
             font-size: 1.5rem;

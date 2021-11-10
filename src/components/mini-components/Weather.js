@@ -63,6 +63,12 @@ const Weather = () => {
         setView(!view);
     }
 
+    //Function and state to toggle the dropdown to set the users preferences, used when max-width is 500px
+    const [dropdown, setDropdown] = useState(false);
+    const toggleDropdown = () => {
+        setDropdown(!dropdown);
+    }
+
     return (
         <div className='weather-wrapper'>
             <div className='todays-weather'>
@@ -86,7 +92,7 @@ const Weather = () => {
                         <p>High: {formatUnits(currentUser.units, currentUser.primary_weather.daily[0].temp.max)}</p>
                         <p>Low: {formatUnits(currentUser.units, currentUser.primary_weather.daily[0].temp.min)}</p>
                     </div>
-                    <div>
+                    <div className='weather-times'>
                         <p>Sunrise: {formatDate(currentUser.primary_weather.current.sunrise)}</p>
                         <p>Sunset: {formatDate(currentUser.primary_weather.current.sunset)}</p>
                     </div>
@@ -95,7 +101,8 @@ const Weather = () => {
             </div>
             <div className='preference-container'>
                 <h3>Preferences</h3>
-                <div className='preference-wrapper'>
+                <button className='toggle-button preference-dropdown' onClick={toggleDropdown}>≡</button>
+                <div className={dropdown? 'preference-wrapper preference-active' : 'preference-wrapper'}>
                     <div className="toggle-switch">
                         <h4>Units</h4>
                         <label className="checkbox toggle switch" onChange={handleUnits}>
