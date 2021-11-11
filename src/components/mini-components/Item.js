@@ -28,16 +28,21 @@ const Item = (props) => {
     // State must be sent to the NewForm modal and NewProject modal
     // in order to allow user to update item.
     const [source, setSource] = useState({
+        status: 'new',
         data: undefined,
-        object: 'item'
+        id: 'item',
+        ref: null
     })
 
     const handleEdit = (e) => {
         setDetailModal(false);
+        props.updateSource();
         //set source in state. The data section will hold the item object
         setSource({
+            status: 'edit',
             data: item,
-            object: 'item'
+            id: 'item',
+            ref: null
         })
 
         toggleModal();
@@ -61,9 +66,7 @@ const Item = (props) => {
 
     //Function to update the completed status of a post
     const updateChecked = async (e) => {
-        console.log('in update checked')
         let classes = e.target.className.split(' ')
-        console.log(classes)
         //First, grab the items data and update the completed status
         let initIndex = currentUser.planner.items.findIndex(item => item._id === classes[0])
         let newItem = Object.assign({}, currentUser.planner.items[initIndex]);
@@ -87,7 +90,7 @@ const Item = (props) => {
     return (
         <div className='item item-container'>
             <div className='item item-title'>
-            <i className={item.priority === 1? "fas fa-exclamation-triangle" : item.priority ===2 ? "fas fa-exclamation-circle" : "fas fa-dot-circle"}></i>
+                <i className={item.priority === 1 ? "fas fa-exclamation-triangle" : item.priority === 2 ? "fas fa-exclamation-circle" : "fas fa-dot-circle"}></i>
                 {/* <p className={item.priority === 1 ? 'bullet high' : item.priority === 2 ? 'bullet med' : 'bullet low'}>&bull;</p> */}
                 <form className='item-checkbox-form'>
                     <label htmlFor='completed'>

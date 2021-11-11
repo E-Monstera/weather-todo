@@ -16,14 +16,18 @@ const Notes = () => {
     }
 
     const [source, setSource] = useState({
+        status: 'new',
         data: undefined,
-        object: 'note'
+        id: 'note',
+        ref: null
     })
 
     const clearSource = () => {
         setSource({
+            status: 'new',
             data: undefined,
-            object: 'note'
+            id: 'note',
+            ref: null
         })
     }
 
@@ -33,7 +37,9 @@ const Notes = () => {
         let index = planner.notes.findIndex(note => note._id === e.target.id)
         setSource({
             data: planner.notes[index],
-            object: 'note'
+            status: 'edit',
+            id: 'note',
+            ref: null
         })
 
         //setSource will cause modal to open in the note section

@@ -30,30 +30,29 @@ const NewNote = (props) => {
     // Function to handle submitting the form, a user may edit or create a new note in this function
     const handleSubmit = async (e) => {
         e.preventDefault();
+        let planner = currentUser.planner;
 
-        if (source.data === undefined) {
+        if (source.status === 'new') {
             //Submit the new note to the database
             let res = await post_note(newNote);
             if (res.message === 'Note created') {
                 //success! Now update state/context
-                let planner = currentUser.planner;
                 planner.notes.push(res.note)
-                userContext.userDispatch({ type: 'updatePlanner', payload: { planner } })
             }
         } else {
             //User is editting an existing note
             let res = await put_note(newNote);
             if (res.message === 'Note updated') {
                 // Successfully editted note! Now update state
-                let planner = currentUser.planner;
                 let index = planner.notes.findIndex(note => note._id === e.target.id)
                 planner.notes.splice(index, 1, res.note)
             }
             //Reset the state of source so that the NewNote modal won't display outdated data
             props.clearSource();
         }
-
-
+        
+        
+        userContext.userDispatch({ type: 'updatePlanner', payload: { planner } })
         props.toggleModal();
     }
 

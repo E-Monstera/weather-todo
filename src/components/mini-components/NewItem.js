@@ -5,6 +5,8 @@ import { htmlDecode } from '../../services/formatting';
 
 
 const NewItem = (props) => {
+    //Destructure props
+    const { source } = props;
 
     // Grab UserContext from app.js and destructure currentUser from it
     const userContext = useContext(UserContext);
@@ -29,7 +31,7 @@ const NewItem = (props) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (typeof props.source.data === 'object') {
+        if (source.status==='edit') {    //Editing an item
             updateEdit();
         } else {    //Adding a new item
             //Send data to database 
@@ -53,7 +55,7 @@ const NewItem = (props) => {
     }
 
     const updateEdit = async () => {
-        if (typeof item.project === 'object') {
+        if (typeof item.project === 'object' && item.project !== null) {
             // Database populates project with data when leaving the database,
             // Before submitting an item to the db we need to make sure it only contains the id
             let project = item.project._id;
@@ -76,18 +78,20 @@ const NewItem = (props) => {
     //useEffect to check if the modal was opened to edit an item
     //If it was, update state
     useEffect(() => {
-        if (typeof props.source.data === 'object') {
-            setItem(props.source.data)
-        } else if (typeof props.source.data === 'string' && props.source.data.length > 0) {
+        if (source.status === 'edit') {
+            //User is editing an existing item
+            setItem(source.data)
+        } else if (source.status === 'new' && source.ref !== null) {
+            //User is adding an item to a specific project
             setItem(prevState => ({
                 ...prevState,
-                project: props.source.data
+                project: source.ref
             }))
         } else {
             return;
         }
 
-    }, [props.source.data])
+    }, [source])
 
     return (
         <form onSubmit={handleSubmit} >
@@ -102,7 +106,7 @@ const NewItem = (props) => {
             </div>
             <div className='form-element'>
                 <label htmlFor='priority'>Priority:</label>
-                <select id='priority' name='priority' defaultValue={typeof props.source.data === 'object' ? props.source.data.priority : ''} onChange={handleChange}>
+                <select id='priority' name='priority' defaultValue={typeof source.data === 'object' ? source.data.priority : ''} onChange={handleChange}>
                     <option id='1' name='1' value='1'>High</option>
                     <option id='2' name='2' value='2' >Medium</option>
                     <option id='3' name='3' value='3'>Low</option>
@@ -111,7 +115,7 @@ const NewItem = (props) => {
 
             <div className='form-element'>
                 <label htmlFor='project'>Project:</label>
-                <select id='project' name='project' defaultValue={props.source.data === undefined ? 'none' : props.source.data.project === null ? 'none' : props.source.data.project._id} onChange={handleChange}>
+                <select id='project' name='project' defaultValue={source.data === undefined ? 'none' : source.data.project === null ? 'none' : source.data.project._id} onChange={handleChange}>
                     <option value='none'>No Project</option>
                     {currentUser.planner.projects.map(project => <option id={project._id} name={project._id} value={project._id} key={project._id}>{htmlDecode(project.title)}</option>)}
                 </select>
@@ -120,7 +124,7 @@ const NewItem = (props) => {
                 <label htmlFor='due_date'>Due By Date:</label>
                 <input type='date' id='due_date' name='due_date' defaultValue={item.due_date.toString().substr(0, 10)} required onChange={handleChange}></input>
             </div>
-            <button type='submit'>{typeof props.source.data === 'object' ? 'Edit Item' : 'Add New Item'}</button>
+            <button type='submit'>{typeof source.data === 'object' ? 'Edit Item' : 'Add New Item'}</button>
         </form>
     )
 }

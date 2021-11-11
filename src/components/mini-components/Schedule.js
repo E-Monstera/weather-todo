@@ -98,37 +98,47 @@ const Schedule = () => {
     // State and function to handle editting a post
     // State must be sent to the NewForm modal and NewProject modal
     // in order to allow user to update item.
-    /*
-        State variable to handle edits and new items
-        Key purpose: When a user opens the NewForm modal, the active tab and data change dynamically
-        based on where the button was pressed. This state controls how data is sent to the modal
-        Additionally, it's used in the below useEffect for active loading
-        Summary:
-        Page load: data: undefined, object: ''
-        New item (general item): data: undefined, object: ''
-        New item (for a specific project): data: projectid, object: 'item',
-        Delete Project: data:projectObject, Object: 'Project' - Following deleting, active is set to 'All' so it defaults to that tab
-        Edit Project: Data:projectObject, Object: 'Project'
-    */
     const [source, setSource] = useState({
-        data: undefined,
-        object: ''
+        status: 'initial',              //options: initial (for initial page load), new (for new project/item/note), or edit
+        data: undefined,                //Undefined if status==='new', otherwise contains the data to be editted
+        id: undefined,                  //Indicates which modal to open, note, project, or item
+        ref: null,                      //Would contain the project._id if user wanted to add a new item to the specific project
     })
+
+    //This function is only triggered when 'edit item' is called from the item component or details modal
+    //It's importance serves to refresh the page after successfully editting a post
+    const updateSource = () => {
+        setSource({
+            status: 'edit',
+            data: undefined,
+            id: 'item',
+            ref: null
+        })
+    }
 
     // useEffect to display only items that are due today - only engaged in page load and following edits
     useEffect(() => {
+        console.log('triggered')
+        console.log(source)
         if (Object.keys(currentUser.planner).length === 0) {  //currentUser still hasn't been set in App.js - Wait for it to be set
             return;
-        } else if ((source.data === undefined && source.object === '') || source.object === 'item') {
-            //If this is true, the useeffect has NOT been called after an edit
-            //Set the activeItems (to be displayed in DOM) to show all items
+        } else if (source.status==='initial' || (source.status ==='edit' && source.id==='item')) {
+            console.log('sourcting!')
+            //Initial page load, sort the items and display to DOM
+            //Or, page refresh triggered by a page edit
             if (active.id === 0) {
                 sortItems(active.name)
             } else {
                 sortItems(active.id)
             }
-            // sortItems(active.id)
-        } else if (source.object === 'project') {
+            //Update source.status
+            setSource({
+                status: 'new',
+                data: undefined,
+                id: undefined,
+                ref: null
+            })
+        } else if (source.id === 'project' && source.status === 'edit') {
             //useeffect was called after a project was editted. 
             //active needs to be updated in order to reflect the name change
             let update = currentUser.planner.projects.filter(proj => proj._id === source.data._id)
@@ -136,7 +146,6 @@ const Schedule = () => {
                 name: update[0].title,
                 id: update[0]._id
             })
-            // assignActiveItems({name: update[0].title, id: update[0]._id})
         } else {
             return;
         }
@@ -175,8 +184,10 @@ const Schedule = () => {
         })
 
         setSource({
+            status: 'edit',
             data: currentUser.planner.projects[index],
-            object: 'project'
+            id: 'project',
+            ref: null
         })
 
         toggleModal();  //Display the edit modal
@@ -184,21 +195,22 @@ const Schedule = () => {
 
     //Function to add a new item - Determines whether the user is adding an item in general or to a specific project
     const addItem = () => {
-        console.log(active)
         if (active.id === 0) {
             // User is adding an item to a general pool
-            // Set object to item so the modal opens up the NewItem component
-            // but let data be undefined to indicate that it's not associated with a project
+            // Update source to indicate the NewForm modal opens the 'item' tab
             setSource({
+                status: 'new',
                 data: undefined,
-                object: 'item'
+                id: 'item',
+                ref: null
             })
         } else {
-            //User wants to add the item to a project, edit source state to 
-            //indicated which project the item wants to be saved to.
+            //User wants to add the item to a project, update source to indicate that the item is referencing a specific project
             setSource({
-                data: active.id,
-                object: 'item'
+                status: 'new',
+                data: undefined,
+                id: 'item',
+                ref: active.id
             })
         }
         toggleModal();
@@ -207,6 +219,16 @@ const Schedule = () => {
     const [dropdown, setDropdown] = useState(false);
     const toggleDropdown = () => {
         setDropdown(!dropdown);
+    }
+
+    const openProject = () => {
+        setSource({
+            status: 'new',
+            data: undefined,
+            id: 'project',
+            ref: null
+        })
+        toggleModal();
     }
 
     return (
@@ -225,7 +247,7 @@ const Schedule = () => {
                 {currentUser.id===''? null :
                 currentUser.planner.projects !== undefined && currentUser.planner.projects.length === 0? <p>No Projects On Record</p>:null}
                 {currentUser.planner.projects && currentUser.planner.projects !== undefined? currentUser.planner.projects.map(project => <button className={active.id === project._id ? 'active-tab project-tab' : `${project.title} project-tab`} id={project._id} onClick={toggleActive} key={project._id}>{active.id === project._id ? '// ': null}{project.title}</button>) : null}
-                <button className='new-item-button' onClick={toggleModal}>+</button>
+                <button className='new-item-button' onClick={openProject}>+</button>
             </div>
             <div className='planner-content'>
                 {active.id === 0 ? <h2>{active.name} Items</h2> :
@@ -237,7 +259,7 @@ const Schedule = () => {
                         </div>
                     </div>}
                 {activeItems.length === 0? <div id='no-item'><p id='no-item-alert'>Add Some Items! </p> <i class="fas fa-arrow-right"></i></div>:null}
-                {activeItems ? activeItems.map(item => <Item item={item} key={item._id} />) : null}
+                {activeItems ? activeItems.map(item => <Item item={item} key={item._id} updateSource={updateSource}/>) : null}
                 <button className='new-item-button' onClick={addItem}>+</button>
             </div>
             {modal ? <NewForm toggleModal={toggleModal} source={source} /> : null}
