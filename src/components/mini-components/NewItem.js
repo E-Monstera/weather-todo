@@ -98,7 +98,7 @@ const NewItem = (props) => {
 
             <div className='form-element'>
                 <label htmlFor='title'>Title:</label>
-                <input type='text' id='title' name='title' required initialvalue={htmlDecode(item.title)} value={htmlDecode(item.title)} onChange={handleChange} ></input>
+                <input type='text' id='title' name='title' autoFocus required initialvalue={htmlDecode(item.title)} value={htmlDecode(item.title)} onChange={handleChange} ></input>
             </div>
             <div className='form-element'>
                 <label htmlFor='desc'>Description:</label>

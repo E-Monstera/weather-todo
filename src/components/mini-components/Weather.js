@@ -88,7 +88,7 @@ const Weather = () => {
                         <p>Feels Like: {formatUnits(currentUser.units, currentUser.primary_weather.current.feels_like)}</p>
                     </div>
                     <div className='weather-right'>
-                        <p>Wind Speed: {currentUser.primary_weather.current.wind_speed} m/s</p>
+                        <p>Wind Speed: {currentUser.units === 'metric'? `${currentUser.primary_weather.current.wind_speed} m/s` : `${Math.round(currentUser.primary_weather.current.wind_speed * 2.23694)} mph`} </p>
                         <p>High: {formatUnits(currentUser.units, currentUser.primary_weather.daily[0].temp.max)}</p>
                         <p>Low: {formatUnits(currentUser.units, currentUser.primary_weather.daily[0].temp.min)}</p>
                     </div>

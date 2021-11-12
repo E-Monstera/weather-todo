@@ -185,7 +185,7 @@ const Home = () => {
                             <input type='text' id='location' name='location' placeholder='Search New City/Zipcode' required initialvalue={location} value={location} onChange={handleChange}></input>
                         </form>
                     </div>
-                    {currentUser.location === '' ? <h3 className='title-color'>Please Enter Location Above</h3> : loading ?
+                    {currentUser.location === '' ? <h3 className='title-color'>Please Enter Location Above</h3> : loading || currentUser.primary_weather.current === undefined?
                         <h3 className='title-color'>Loading...</h3> : < Weather />}
 
 

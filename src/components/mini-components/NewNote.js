@@ -68,7 +68,7 @@ const NewNote = (props) => {
         <form onSubmit={handleSubmit} >
             <div className='form-element'>
                 <label htmlFor='title'>Add Title:</label>
-                <input type='text' id='title' name='title' required initialvalue={htmlDecode(newNote.title)} value={htmlDecode(newNote.title)} onChange={handleChange} ></input>
+                <input type='text' autoFocus id='title' name='title' required initialvalue={htmlDecode(newNote.title)} value={htmlDecode(newNote.title)} onChange={handleChange} ></input>
             </div>
             <div className='form-element new-note-textarea'>
                 <label htmlFor='content'>Add New Note:</label>

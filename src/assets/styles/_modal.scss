@@ -176,7 +176,15 @@
 }
 
 .details-modal {
-    div {
+    .details-header {
+        display: flex;
+        justify-content: center;
+
+        .detail-buttons {
+            display: flex;
+            flex-direction: column;
+        }
+
         h2 {
             font-size: 2rem;
         }
@@ -193,9 +201,17 @@
         text-decoration: none;
     }
 
-    .details-header {
+    .details-label {
         font-weight: 600;
-        padding: 5px 0;
+    }
+}
+
+.details {
+    div {
+        padding: 5px;
+    }
+    #details-desc {
+        margin:5px 0 0 5px; 
     }
 }
 
@@ -206,6 +222,11 @@
     }
 }
 
+@media (max-width: 500px) {
+    .details-modal {
+        width: 95%;
+    }
+}
 // Move the 'new item' selection to the top of the modal
 @media (max-width: 350px) {
     .modal-main h2 {
@@ -228,5 +249,13 @@
                 width: fit-content;
             }
         }
+    }
+
+    .x-button {
+        width: 20px;
+        height: 20px;
+        font-size: 1rem;
+        line-height: 1.1rem;
+        border-radius: 4px;
     }
 }

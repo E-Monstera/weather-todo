@@ -53,7 +53,7 @@ const NewProject = (props) => {
         <form onSubmit={handleSubmit} >
             <div className='form-element'>
                 <label htmlFor='newProject'>{props.source.data === undefined ? 'Add New Project' : 'Edit Project'}</label>
-                <input type='text' id='newProject' name='newProject' initialvalue={project} value={project} onChange={handleChange} ></input>
+                <input type='text' autoFocus id='newProject' name='newProject' initialvalue={project} value={project} onChange={handleChange} ></input>
             </div>
             <button type='submit'>{props.source.data === undefined ? 'Add New Project' : 'Edit Project'}</button>
         </form>

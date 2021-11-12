@@ -25,10 +25,6 @@ const Login = (props) => {
         }))
     }
 
-    const loginDemo = () => {
-        // email:demo@demo.com
-        // password: Testing123!
-    }
 
     //Function to handle submitting data to the backend
     const handleSubmit = async (e) => {
@@ -40,8 +36,6 @@ const Login = (props) => {
             // Now that the users basic data has been collected, grab their weather data and planner
             getToDo()
                 .then(res2 => {
-                    console.log('in login.js')
-                    console.log(res.user.location)
                     if (res.user.location === undefined) {
                         //A location has not yet been set by the user
                         userContext.userDispatch({ type: 'updatePlanner', payload: { planner: res2.data } })
@@ -76,7 +70,7 @@ const Login = (props) => {
                 <form onSubmit={handleSubmit}>
                     <div className='form-element'>
                         <label htmlFor='email'>Email:</label>
-                        <input type='text' id='email' name='email' required initialvalue={user.username} value={user.username} onChange={handleChange}></input>
+                        <input type='text' id='email' autoFocus name='email' required initialvalue={user.username} value={user.username} onChange={handleChange}></input>
                     </div>
 
                     <div className='form-element'>

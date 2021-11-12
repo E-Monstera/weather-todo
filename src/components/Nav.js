@@ -28,7 +28,7 @@ const Nav = () => {
         <nav>
             <div className='title'>
                 <Link to='/'>
-                    The Weather <div className='title-accent'><p>(or</p><p>not)</p></div> Planner
+                    The Weather <div className='title-accent'><p>or</p><p>not</p></div> Planner
                 </Link>
             </div>
             <button className='toggle-button' onClick={toggleDropdown}>≡</button>

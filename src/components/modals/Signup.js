@@ -90,7 +90,7 @@ const Signup = (props) => {
                 <form onSubmit={handleSubmit}>
                     <div className='form-element'>
                         <label htmlFor='username'>Username:</label>
-                        <input type='text' id='username' name='username' required initialvalue={user.username} value={user.username} onChange={handleChange}></input>
+                        <input type='text' autoFocus id='username' name='username' required initialvalue={user.username} value={user.username} onChange={handleChange}></input>
                         {errors.username === ''? null: <span className='error'>{errors.username}</span>}
                     </div>
 

@@ -22,12 +22,15 @@ nav {
     }
 
     .title-accent {
-        padding: 5px 10px;
+        display: block;
+        padding: 5px 15px 5px 15px;
+        font-style: italic;
 
         p {
             color: black;
             font-size: 25px;
             font-weight: 600;
+            text-align: center;
         }
     }
 
@@ -85,10 +88,18 @@ nav {
 }
 
 @media (max-width:700px) {
-    nav .title a{
-        font-size: 3rem;
-    }
+    nav .title {
+        display: flex;
+        flex-direction: row;
+        
+        a{
+            font-size: 3rem;
+        }
 
+        .title-accent {
+        }
+    }
+    
     nav .title-accent p {
         font-size: 1.2rem;
     }
@@ -97,14 +108,20 @@ nav {
 @media (max-width:470px) {
     nav {
         height: 50px;
-
+        
         .title {
-        padding-left: 10px;
+            padding-left: 10px;
             a{
                 font-size: 2.2rem;
             }
         }
     }
+    .title-accent {
+        align-self: center;
+        padding: 5px 10px 5px 10px;
+
+    }
+
 
     nav .title-accent p {
         font-size: .9rem;

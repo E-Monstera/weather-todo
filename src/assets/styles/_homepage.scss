@@ -1,35 +1,175 @@
 .welcome-container {
-    height: 100vh;
-    background-color: #2b2e2b;
+    min-height: 100vh;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 
 .welcome-header {
-    height: 400px;
-    
-    .banner {
-        background-image: url(../images/banner.jpg);
-        height: 100%;
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: center;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        
-        .banner:after {
-            background-color: rgba(0, 0, 0, .5);
-        }
-        button {
-            position: absolute;
-            top: 0;
-            right: 0;
-        }
+    height: 350px;
+    padding-top: 50px;
+    background-color: rgba(240, 240, 240, .3);
 
-        h1 {
-            font-size: 2.5rem;
-            // color: white;
-        }
+}
+
+.banner {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    button {
+        position: absolute;
+        top: 10px;
+        right: 20px;
     }
 
+    h1 {
+        font-size: 3rem;
+        margin-bottom: 15px;
+    }
+
+    div h1:nth-child(2) {
+        margin-left: 50px;
+    }
+
+    div p {
+        margin-left: 110px;
+        margin-bottom: 15px;
+        font-size: 1.2rem;
+        font-style: italic;
+        font-weight: 600;
+        color: rgb(66, 3, 3);
+    }
+
+    div h1:nth-child(4) {
+        margin-left: 150px;
+    }
+}
+
+.cta-section {
+    background-color: $primary-background;
+    min-height: 100%;
+    height: calc(100vh - 350px);
+    padding-top: 80px;
+    display: flex;
+    flex-direction: column;
+
+    p {
+        text-align: center;
+    }
+    p:nth-child(1) {
+        font-size: 2rem;
+    }
+
+    p:nth-child(2) {
+        font-size: 1.2rem;
+        margin-top: 20px;
+    }
+
+    div {
+        display: flex;
+        width: 40%;
+        min-width: 500px;
+        margin: 0 auto;
+        justify-content: space-around;
+        padding-top: 40px;
+    }
+}
+
+.home-button {
+    align-self: center;
+    width: 200px;
+    background-color: #98bbdb;
+    padding: 10px;
+    border: 3px solid #d8e8f7;
+    border-radius: 5px;
+}
+
+.home-button:hover {
+    transform: scale(1.1);
+}
+
+@media (max-width:580px) {
+    .welcome-header {
+        height: 250px;
+        padding-top: 50px;
+    }
+
+
+    .cta-section {
+        padding-top: 40px;
+        height: calc(100vh - 250px);
+    
+        p:nth-child(1) {
+            font-size: 1.5rem;
+        }
+    
+        p:nth-child(2) {
+            font-size: 1rem;
+            margin-top: 20px;
+        }
+    
+    }
+}
+
+@media (max-width: 500px) {
+    .home-button {
+        width: 150px;
+    }
+
+    .cta-section {
+        
+        p:nth-child(1) {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+    
+        p:nth-child(2) {
+            font-size: .9rem;
+        }
+     
+        div {
+            min-width: 100%;
+        }
+    }
+}
+
+@media (max-width: 400px) {
+    
+    .banner {        
+    
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+    
+        div h1:nth-child(2) {
+            margin-left: 25px;
+        }
+    
+        div p {
+            margin-left: 50px;
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+    
+        div h1:nth-child(4) {
+            margin-left: 75px;
+        }
+    }
+}
+
+
+@media (max-width: 300px) {
+    .cta-section div {
+        display: flex;
+        flex-direction: column;
+        padding-top: 20px;
+
+        button {
+            margin: 5px 0;
+        }
+    }
 }
