@@ -73,7 +73,6 @@ const Notes = () => {
                 <button onClick={displayNoteModal} className='new-item-button note-button'>+</button>
             </div>
             <div className='notes-container'>
-                {console.log(currentUser)}
                 {currentUser.planner.notes.length === 0 ? <p>Add New Notes Above!</p> : currentUser.planner.notes.map(note => <Note note={note} key={note._id} handleDelete={handleDelete} handleEdit={handleEdit} />)}
             </div>
             {modal ? <NewForm toggleModal={toggleModal} source={source} clearSource={clearSource}/> : null}

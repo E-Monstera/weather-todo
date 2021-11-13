@@ -23,8 +23,6 @@ const reducer = (state, action) => {
   switch (action.type) {
     case 'setUser':
       let location = ''
-      console.log('in setUser')
-      console.log(action.payload.user)
       if (action.payload.user.location) {
         location = action.payload.user.location;
       }

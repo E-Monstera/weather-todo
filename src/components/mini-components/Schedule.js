@@ -118,12 +118,9 @@ const Schedule = () => {
 
     // useEffect to display only items that are due today - only engaged in page load and following edits
     useEffect(() => {
-        console.log('triggered')
-        console.log(source)
         if (Object.keys(currentUser.planner).length === 0) {  //currentUser still hasn't been set in App.js - Wait for it to be set
             return;
         } else if (source.status==='initial' || (source.status ==='edit' && source.id==='item')) {
-            console.log('sourcting!')
             //Initial page load, sort the items and display to DOM
             //Or, page refresh triggered by a page edit
             if (active.id === 0) {

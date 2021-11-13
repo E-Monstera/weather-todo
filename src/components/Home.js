@@ -57,8 +57,6 @@ const Home = () => {
 
     //Function to update the completed status of a post
     const updateChecked = async (e) => {
-        console.log('in update checked')
-        console.log(e.target)
         //First, grab the items data and update the completed status
         let initIndex = currentUser.planner.items.findIndex(item => item._id === e.target.className)
         let newItem = Object.assign({}, currentUser.planner.items[initIndex]);
