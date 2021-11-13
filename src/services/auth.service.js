@@ -4,7 +4,7 @@ import axios from "axios";
 import { authHeader } from './auth-header';
 
 // const API_URL = "http://localhost:5000/";
-const API_URL = "https://intense-oasis-80724.herokuapp.com/";
+const API_URL = "https://intense-oasis-80724.herokuapp.com";
 
 // Registers a new user 
 const register = async (newUser) => {
@@ -21,7 +21,7 @@ const register = async (newUser) => {
 //To login a user
 const login = (user) => {
     return axios
-        .post(API_URL + "session", user)
+        .post(API_URL + "/session", user)
 
         // API call was successful, set the token in local storage and return the response
         .then((response) => {
@@ -46,7 +46,7 @@ const logout = () => {
 //Function used to authenticate a returning user - Allowing the user to bypass logging in again
 const authenticateUser = async () => {
     const config = authHeader();
-    return axios.get(`${API_URL}session`, config);
+    return axios.get(`${API_URL}/session`, config);
 }
 
 
