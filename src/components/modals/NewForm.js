@@ -16,14 +16,14 @@ const NewForm = (props) => {
     //Function to display the form for the active tab (whether for an item, note, or project)
     //This function is important as it fixes a bug caused by opening a form to edit something, then clicking on
     //a different tab
-    const DisplayForm = () => {
+    const DisplayForm = (props) => {
         console.log(source)
         if (active === source.id) {
             //The user is opening a specific form, straightforward
             if (active === 'project' || active === undefined) {
                 return <NewProject source={source} toggleModal={toggleModal}/>
             } else if (active === 'item') {
-                return <NewItem source={source} toggleModal={toggleModal}/>
+                return <NewItem source={source} toggleModal={toggleModal} updateItems={props.updateItems}/>
             } else { //User is adding a note
                 return <NewNote source={source} toggleModal={toggleModal} clearSource={props.clearSource}/>
             }
@@ -40,7 +40,7 @@ const NewForm = (props) => {
                 return <NewProject source={newSource} toggleModal={toggleModal}/>
             } else if (active === 'item') {
                 newSource.id = 'item';
-                return <NewItem source={newSource} toggleModal={toggleModal}/>
+                return <NewItem source={newSource} toggleModal={toggleModal} updateItems={props.updateItems}/>
             } else { //User is adding a note
                 newSource.id = 'note';
                 return <NewNote source={newSource} toggleModal={toggleModal}/>
@@ -65,7 +65,7 @@ const NewForm = (props) => {
                     <div className='newForm-content'>
                         {/* {active === 'project' || active === undefined? <NewProject source={props.source} toggleModal={props.toggleModal}/> : active === 'item'? <NewItem source={props.source} toggleModal={props.toggleModal}/> : <NewNote source={props.source} toggleModal={props.toggleModal} clearSource={props.clearSource}/>} */}
                     {/* Depending on what is active, display the correct form */}
-                        <DisplayForm />
+                        <DisplayForm updateItems={props.updateItems}/>
                     </div>
                 </div>
             </div>

@@ -62,6 +62,7 @@ const Item = (props) => {
 
             //Update usercontext to allow live updates for user
             userContext.userDispatch({ type: 'updatePlanner', payload: { planner } })
+            props.updateItems();
         }
     }
 
@@ -85,6 +86,7 @@ const Item = (props) => {
 
             //Then update userContext to allow live updates for user
             userContext.userDispatch({ type: 'updatePlanner', payload: { planner } })
+            props.updateItems();
         }
     }
 
@@ -92,13 +94,13 @@ const Item = (props) => {
         <div className='item item-container'>
             <div className='item item-title'>
                 <i className={item.priority === 1 ? "fas fa-exclamation-triangle" : item.priority === 2 ? "fas fa-exclamation-circle" : "fas fa-dot-circle"}></i>
-                {/* <p className={item.priority === 1 ? 'bullet high' : item.priority === 2 ? 'bullet med' : 'bullet low'}>&bull;</p> */}
-                <form className='item-checkbox-form'>
+                <div className='item-checkbox-form'>
+                    <input type='checkbox' checked={item.completed} name='completed' id='completed' className={`${item._id} item-checkbox checkbox-circle`} onChange={updateChecked}></input>
                     <label htmlFor='completed'>
-                        <input type='checkbox' checked={item.completed} name='completed' id='completed' className={`${item._id} item-checkbox`} onChange={updateChecked}></input>
-                        <span></span>
+                        Completed?
+                        {/* <span className='hello'></span> */}
                     </label>
-                </form>
+                </div>
                 <p>{htmlDecode(item.title)}</p>
             </div>
             <div className='item item-details'>
@@ -107,7 +109,7 @@ const Item = (props) => {
                 <button alt='edit item' className='item-button edit-button' onClick={handleEdit}><i className="far fa-edit" alt='edit item' id={item._id}></i></button>
                 <button alt='delete item' className='item-button delete-button' onClick={handleDelete}><i className="far fa-trash-alt" alt='delete item' id={item._id}></i></button>
             </div>
-            {modal ? <NewForm source={source} toggleModal={toggleModal} /> : null}
+            {modal ? <NewForm source={source} toggleModal={toggleModal} updateItems={props.updateItems} /> : null}
             {detailModal ? <Details toggleDetails={toggleDetails} handleDelete={handleDelete} handleEdit={handleEdit} item={item} /> : null}
         </div>
     )

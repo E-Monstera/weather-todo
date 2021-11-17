@@ -50,6 +50,7 @@ const NewItem = (props) => {
 
             planner.items.push(resultingItem);       //Update the general list of items
             userContext.userDispatch({ type: 'updatePlanner', payload: { planner } })
+            props.updateItems();
         }
         props.toggleModal();
     }
@@ -73,6 +74,7 @@ const NewItem = (props) => {
             planner.items.splice(index, 1, res.item);
             //Then update userContext to allow live updates for user
             userContext.userDispatch({ type: 'updatePlanner', payload: { planner } })
+            props.updateItems();
         }
     }
     //useEffect to check if the modal was opened to edit an item
@@ -115,7 +117,7 @@ const NewItem = (props) => {
 
             <div className='form-element'>
                 <label htmlFor='project'>Project:</label>
-                <select id='project' name='project' defaultValue={source.data === undefined ? 'none' : source.data.project === null ? 'none' : source.data.project._id} onChange={handleChange}>
+                <select id='project' name='project' defaultValue={source.ref === null ? 'none' : source.ref} onChange={handleChange}>
                     <option value='none'>No Project</option>
                     {currentUser.planner.projects.map(project => <option id={project._id} name={project._id} value={project._id} key={project._id}>{htmlDecode(project.title)}</option>)}
                 </select>

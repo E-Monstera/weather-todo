@@ -1,5 +1,5 @@
 .planner-wrapper {
-    width: 100vw;
+    width: 100%;
     display: flex;
     margin-top: 50px;
     justify-content: center;
@@ -30,7 +30,7 @@
         border: none;
         background-color: $tertiary-background;
         color: black;
-        font-size: 1.3rem;
+        font-size: 1.4rem;
         font-weight: 600;
         border-radius: 10px 10px 0 0;
     }
@@ -159,29 +159,18 @@
     height: 100%;
 }
 
-.item-checkbox-form label input {
-    display: none;
-}
-
-.item-checkbox-form span {
-    height:15px;
-    width: 15px;
-    border-radius: 50%;
-    background-color: white;
-    border: 1px solid grey;
-    display: inline-block;
-    position: relative;
-    margin-right: 10px;
-}
-
-.item-checkbox-form [type=checkbox]:checked + span:before {
-    content: '\2714';
+.item-checkbox-form label {
     position: absolute;
-    top: -2px;
-    font-size: 1.2rem;
-    left: 0;
-  }
+    left: -99999px;
+}
 
+.item p {
+    padding: 5px 0 0 5px;
+}
+
+.item-title i {
+    width: 20px;
+}
 .item {
     display: flex;
     align-items: center;
@@ -231,6 +220,7 @@
 
     h2 {
         text-align: center;
+        font-size: 1.4rem;
     }
     .weather-icon {
         margin: 10px 0;
@@ -253,7 +243,7 @@
 
 .notes-wrapper {
     width: 100%;
-    overflow-y:scroll;
+    overflow-y:auto;
     height: 100%;
 }
 
@@ -393,9 +383,11 @@
         button {
             background-color: rgba(0,0,0,0);
             border: none;
-            font-size: 1.6rem;
-            font-weight: 800;
-            padding-bottom: 5px;
+            height: 40px;
+            width: 40px;
+            font-size: 2rem;
+            padding-bottom: 15px;
+            line-height: 1rem;
         }
 
         button:hover {
@@ -436,7 +428,7 @@
     }
 
     .item p {
-        font-size: .8rem;
+        // font-size: .8rem;
     }
 
     .planner {

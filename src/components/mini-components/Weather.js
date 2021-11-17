@@ -129,14 +129,6 @@ const Weather = () => {
                 </div>
             </div>
 
-            <div className='daily weather-container'>
-                <h2 className='title-color'>Daily Forecast</h2>
-                {view ?
-                    <div>
-                        {currentUser.primary_weather.daily.map(day => <WeatherIcon day={day} key={day.dt} />)}
-                    </div> :
-                    <ListView interval='daily' data={currentUser.primary_weather.daily} />}
-            </div>
 
             <div className='hourly weather-container'>
                 <h2 className='title-color'>Hourly Forecast</h2>
@@ -149,6 +141,14 @@ const Weather = () => {
                         <button className='scroll-button' id='right' onMouseDown={startScroll} onMouseUp={stopScroll}>&#10095;</button>
                     </div>
                     : <ListView interval='hourly' data={currentUser.primary_weather.hourly.slice(0, 24)} />}
+            </div>
+            <div className='daily weather-container'>
+                <h2 className='title-color'>Daily Forecast</h2>
+                {view ?
+                    <div>
+                        {currentUser.primary_weather.daily.map(day => <WeatherIcon day={day} key={day.dt} />)}
+                    </div> :
+                    <ListView interval='daily' data={currentUser.primary_weather.daily} />}
             </div>
         </div>
     )

@@ -1,5 +1,4 @@
 // @import url('https://fonts.googleapis.com/css2?family=Fleur+De+Leah&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Carattere&display=swap');
 
 
 nav {
@@ -10,11 +9,11 @@ nav {
     
     
     .title {
-        font-family: 'Carattere', cursive;
         padding-left: 150px;
         padding-top: 20px;
         
         a {
+            font-family: $fancy-font;
             color: black;
             font-size: 80px;
             display: flex;
@@ -28,6 +27,7 @@ nav {
 
         p {
             color: black;
+            font-family: $fancy-font;
             font-size: 25px;
             font-weight: 600;
             text-align: center;

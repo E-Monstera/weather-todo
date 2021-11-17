@@ -22,7 +22,7 @@ const HourlyIcon = (props) => {
 
     return (
         <div className='weather-icon'>
-            <p>{dateFormat(hour.dt)}</p>
+            <h5>{dateFormat(hour.dt)}</h5>
 
             <img src={`http://openweathermap.org/img/wn/${hour.weather[0].icon}.png`} alt='weather icon'></img>
 

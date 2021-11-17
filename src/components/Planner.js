@@ -16,16 +16,6 @@ const Planner = () => {
         setActive(e.target.id)
     }
 
-    const [units, setUnits] = useState('c');
-    const formatUnits = (temp) => {
-        if (units === 'f') {
-            return `${temp} °F`
-        } else {
-            return `${temp} °C`
-        }
-    }
-
-
     return (
         <div className='planner-wrapper'>
             <div className='planner'>
@@ -41,7 +31,7 @@ const Planner = () => {
                 <h2 className='title-color'>{currentUser.location.toUpperCase()}</h2>
                 <div>
                     {Object.keys(currentUser.primary_weather).length === 0 ? null :
-                        currentUser.primary_weather.daily.map(day => <WeatherIcon day={day} key={day.dt} formatUnits={formatUnits} />)}
+                        currentUser.primary_weather.daily.map(day => <WeatherIcon day={day} key={day.dt} />)}
                 </div>
             </div>
         </div>

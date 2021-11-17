@@ -116,11 +116,29 @@ const Schedule = () => {
         })
     }
 
+    const updateItems = () => {
+        if (active.id === 0) {
+            sortItems(active.name)
+        } else {
+            sortItems(active.id)
+        }
+        //Update source.status
+        setSource({
+            status: 'new',
+            data: undefined,
+            id: undefined,
+            ref: null
+        })
+    }
+
+
     // useEffect to display only items that are due today - only engaged in page load and following edits
     useEffect(() => {
+        // console.log('in useeffect')
+        // console.log(source)
         if (Object.keys(currentUser.planner).length === 0) {  //currentUser still hasn't been set in App.js - Wait for it to be set
             return;
-        } else if (source.status==='initial' || (source.status ==='edit' && source.id==='item')) {
+        } else if (source.status==='initial') {
             //Initial page load, sort the items and display to DOM
             //Or, page refresh triggered by a page edit
             if (active.id === 0) {
@@ -135,6 +153,19 @@ const Schedule = () => {
                 id: undefined,
                 ref: null
             })
+        } else if (source.id === 'item') {
+            // if (active.id === 0) {
+            //     sortItems(active.name)
+            // } else {
+            //     sortItems(active.id)
+            // }
+            // //Update source.status
+            // setSource({
+            //     status: 'new',
+            //     data: undefined,
+            //     id: undefined,
+            //     ref: null
+            // })
         } else if (source.id === 'project' && source.status === 'edit') {
             //useeffect was called after a project was editted. 
             //active needs to be updated in order to reflect the name change
@@ -146,7 +177,7 @@ const Schedule = () => {
         } else {
             return;
         }
-    }, [currentUser])
+    }, [currentUser, active, source])
 
     //State and function to toggle the modal to add a new project, note, or item
     const [modal, setModal] = useState(false);
@@ -236,14 +267,15 @@ const Schedule = () => {
             </div>
             <div className={dropdown? 'planner-sidebar active-sidebar': 'planner-sidebar'}>
 
-                <button className={active.name === 'All' ? 'active-tab' : null} id='All' onClick={toggleActive}>{active.name === 'All' ? '// ' : null }All</button>
-                <button className={active.name === 'Today' ? 'active-tab' : null} id='Today' onClick={toggleActive}>{active.name === 'Today' ? '// ' : null }Today</button>
-                <button className={active.name === 'Tomorrow' ? 'active-tab' : null} id='Tomorrow' onClick={toggleActive}>{active.name === 'Tomorrow' ? '// ' : null }Tomorrow</button>
-                <button className={active.name === 'Urgent' ? 'active-tab' : null} id='Urgent' onClick={toggleActive}>{active.name === 'Urgent' ? '// ' : null }Urgent</button>
+                <button className={active.name === 'All' ? 'active-tab' : null} id='All' onClick={toggleActive}>{active.name === 'All' ? '| ' : null }All</button>
+                <button className={active.name === 'Today' ? 'active-tab' : null} id='Today' onClick={toggleActive}>{active.name === 'Today' ? '| ' : null }Today</button>
+                <button className={active.name === 'Tomorrow' ? 'active-tab' : null} id='Tomorrow' onClick={toggleActive}>{active.name === 'Tomorrow' ? '| ' : null }Tomorrow</button>
+                <button className={active.name === 'Urgent' ? 'active-tab' : null} id='Urgent' onClick={toggleActive}>{active.name === 'Urgent' ? '| ' : null }Urgent</button>
+                
                 <h2>Projects</h2>
                 {currentUser.id===''? null :
                 currentUser.planner.projects !== undefined && currentUser.planner.projects.length === 0? <p>No Projects On Record</p>:null}
-                {currentUser.planner.projects && currentUser.planner.projects !== undefined? currentUser.planner.projects.map(project => <button className={active.id === project._id ? 'active-tab project-tab' : `${project.title} project-tab`} id={project._id} onClick={toggleActive} key={project._id}>{active.id === project._id ? '// ': null}{project.title}</button>) : null}
+                {currentUser.planner.projects && currentUser.planner.projects !== undefined? currentUser.planner.projects.map(project => <button className={active.id === project._id ? 'active-tab project-tab' : `${project.title} project-tab`} id={project._id} onClick={toggleActive} key={project._id}>{active.id === project._id ? '| ': null}{project.title}</button>) : null}
                 <button className='new-item-button' onClick={openProject}>+</button>
             </div>
             <div className='planner-content'>
@@ -255,11 +287,11 @@ const Schedule = () => {
                             {activeItems.length === 0 ? <button id={active.id} alt='delete project' className='item-button delete-button' onClick={handle_del_proj}><i className="far fa-trash-alt" alt='delete project'></i></button> : null}
                         </div>
                     </div>}
-                {activeItems.length === 0? <div id='no-item'><p id='no-item-alert'>Add Some Items! </p> <i class="fas fa-arrow-right"></i></div>:null}
-                {activeItems ? activeItems.map(item => <Item item={item} key={item._id} updateSource={updateSource}/>) : null}
+                {activeItems.length === 0? <div id='no-item'><p id='no-item-alert'>Add Some Items! </p> <i className="fas fa-arrow-right"></i></div>:null}
+                {activeItems ? activeItems.map(item => <Item item={item} key={item._id} updateSource={updateSource} updateItems={updateItems}/>) : null}
                 <button className='new-item-button' onClick={addItem}>+</button>
             </div>
-            {modal ? <NewForm toggleModal={toggleModal} source={source} /> : null}
+            {modal ? <NewForm toggleModal={toggleModal} source={source} updateItems={updateItems}/> : null}
         </div>
     )
 }
