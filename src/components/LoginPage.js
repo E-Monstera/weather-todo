@@ -34,7 +34,7 @@ const LoginPage = () => {
     const loginDemo = async () => {
         //email: testing@test.com
         //password: Testing123!
-        let res = await login({email:'testing@test.com', password:'Testing123!'})     //Wait for user to login
+        let res = await login({ email: 'testing@test.com', password: 'Testing123!' })     //Wait for user to login
         if (res.status === 200) {   //Success! Update userContext and close modal
             userContext.userDispatch({ type: 'setUser', payload: { user: res.user } })
 
@@ -81,15 +81,14 @@ const LoginPage = () => {
                 </div>
             </div>
             <div className='cta-section'>
-                <p>Are you ready for the open road?</p>
-                <p>The perfect planner for your day. Create your plans with the weather in mind and you can never go wrong!</p>
                 <div>
-                    <button className='home-button' onClick={toggleSignUp}>Sign Up</button>
-                    <button className='home-button' onClick={loginDemo}>Try Demo Account</button>
+                    <p>Are you ready for the open road?</p>
+                    <p>The perfect planner for your day. Create your plans with the weather in mind and you can never go wrong!</p>
+                    <div>
+                        <button className='home-button' onClick={toggleSignUp}>Sign Up</button>
+                        <button className='home-button' onClick={loginDemo}>Try Demo Account</button>
+                    </div>
                 </div>
-            </div>
-            <div className='banner-section'>
-
             </div>
             {loginModal ? <Login toggleLogin={toggleLogin} newUserFlag={newUserFlag} /> : null}
             {signUpModal ? <Signup toggleSignUp={toggleSignUp} toggleLogin={toggleLogin} /> : null}

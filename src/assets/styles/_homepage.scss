@@ -2,13 +2,12 @@
     min-height: 100vh;
     height: 100%;
     display: flex;
-    flex-direction: column;
+    // flex-direction: column;
 }
 
 
 .welcome-header {
-    height: 350px;
-    padding-top: 50px;
+    width: 40%;
     background-color: rgba(240, 240, 240, .3);
 
 }
@@ -26,7 +25,8 @@
     }
 
     h1 {
-        font-size: 3rem;
+        font-family: $fancy-font;
+        font-size: 6rem;
         margin-bottom: 15px;
     }
 
@@ -35,9 +35,10 @@
     }
 
     div p {
+        font-family: $fancy-font;
         margin-left: 110px;
         margin-bottom: 15px;
-        font-size: 1.2rem;
+        font-size: 2.5rem;
         font-style: italic;
         font-weight: 600;
         color: rgb(66, 3, 3);
@@ -51,8 +52,13 @@
 .cta-section {
     background-color: $primary-background;
     min-height: 100%;
-    height: calc(100vh - 350px);
-    padding-top: 80px;
+    width: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.cta-section > div {
+    // padding-top: 80px;
     display: flex;
     flex-direction: column;
 
@@ -91,16 +97,74 @@
     transform: scale(1.1);
 }
 
+@media (max-width:1100px) {
+    .welcome-header {
+        width: 50%;
+    }
+
+    .banner {
+        h1 {
+            font-size: 4rem;
+        }
+
+        div p {
+            font-size: 2rem;
+        }
+    }
+
+    .cta-section {
+        width: 50%;
+
+        >div div {
+            min-width: 100%;
+            // border: solid;
+        }
+    }
+
+
+}
+
+@media (max-width:800px) {
+    .welcome-container {
+        flex-direction: column;
+    }
+
+    .welcome-header {
+        width: 100%;
+        padding-top: 50px;
+        // height: 40vh;
+        min-height: 50vh;
+    }
+
+    .cta-section {
+        width: 100%;
+        height: 100%;
+        min-height: 50vh;
+    }
+
+    .banner {
+        h1 {
+            font-size: 3rem;
+        }
+
+        div p {
+            font-size: 1.5rem;
+        }
+    }
+
+    
+}
+
 @media (max-width:580px) {
     .welcome-header {
-        height: 250px;
-        padding-top: 50px;
+        // height: 250px;
+        // padding-top: 50px;
     }
 
 
     .cta-section {
         padding-top: 40px;
-        height: calc(100vh - 250px);
+        // height: calc(100vh - 250px);
     
         p:nth-child(1) {
             font-size: 1.5rem;
