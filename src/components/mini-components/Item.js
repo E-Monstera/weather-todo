@@ -4,7 +4,7 @@ import { delete_item, put_item } from "../../services/user.service";
 import { UserContext } from "../../App";
 import Details from "../modals/Details";
 import { htmlDecode } from "../../services/formatting";
-import { format } from 'date-fns';
+import { format, add } from 'date-fns';
 
 const Item = (props) => {
     //Destructure props
@@ -105,7 +105,7 @@ const Item = (props) => {
             </div>
             <div className='item item-details'>
                 <button className='item-button detail-button' onClick={toggleDetails}><i className="fas fa-info-circle"></i></button>
-                <p>{format((new Date(item.due_date)), 'MM/dd/yyyy')}</p>
+                <p>{format(add(new Date(item.due_date), {days: 1}), 'MM/dd/yyyy')}</p>
                 <button alt='edit item' className='item-button edit-button' onClick={handleEdit}><i className="far fa-edit" alt='edit item' id={item._id}></i></button>
                 <button alt='delete item' className='item-button delete-button' onClick={handleDelete}><i className="far fa-trash-alt" alt='delete item' id={item._id}></i></button>
             </div>
